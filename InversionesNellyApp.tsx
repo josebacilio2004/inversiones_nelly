@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo, useEffect } from 'react';
 
 // ============================================================================
@@ -534,7 +536,7 @@ const INITIAL_ROOMS: HotelRoom[] = [
 
   // Piso 3
   { id: 'r301', roomNumber: '301', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Smart TV'] },
-  { id: 'r302', roomNumber: '302', floor: 3, type: 'MANTENIMIENTO', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'MANTENIMIENTO', amenities: ['En remodelación de pintura'] },
+  { id: 'r302', roomNumber: '302', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'MANTENIMIENTO', amenities: ['En remodelación de pintura'] },
   { id: 'r303', roomNumber: '303', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'DISPONIBLE', amenities: ['Cama King', 'Sala de Reuniones de Obra', 'Kitchenette', 'Hidromasaje'] },
   { id: 'r304', roomNumber: '304', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'OCUPADA', currentGuest: 'Gerencia Minera Chinalco', checkIn: '2026-10-26', checkOut: '2026-11-04', amenities: ['Cama King', 'Sala Ejecutiva', 'Kitchenette'] }
 ];
@@ -711,7 +713,7 @@ export default function InversionesNellyApp() {
     setQuoteForm(prev => ({
       ...prev,
       unitsCount: g050Results.toiletsRequired,
-      cleaningFrequency: g050Results.recommendedSuction.split('(')[0].trim(),
+      cleaningFrequency: g050Results.recommendedSuction.split('(')[0]?.trim() ?? '2 veces por semana',
       modelCode: 'IN-SAN-01'
     }));
     showToast(
@@ -728,7 +730,7 @@ export default function InversionesNellyApp() {
   // Enviar Cotización Rápida B2B -> Actualiza Estado Global ERP
   const handleSubmitQuote = (e: React.FormEvent) => {
     e.preventDefault();
-    const selectedModel = INITIAL_SAN_MODELS.find(m => m.code === quoteForm.modelCode) || INITIAL_SAN_MODELS[0];
+    const selectedModel = INITIAL_SAN_MODELS.find(m => m.code === quoteForm.modelCode) ?? (INITIAL_SAN_MODELS[0] as SanitaryModel);
     const newCode = `CTR-2026-${Math.floor(100 + Math.random() * 900)}`;
     const totalMonthly = selectedModel.monthlyRate * quoteForm.unitsCount;
 
@@ -748,8 +750,8 @@ export default function InversionesNellyApp() {
       assignedSeries: series,
       cleaningFrequency: quoteForm.cleaningFrequency,
       monthlyRate: totalMonthly,
-      startDate: new Date().toISOString().split('T')[0],
-      endDate: new Date(Date.now() + quoteForm.monthsCount * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      startDate: new Date().toISOString().split('T')[0] ?? '2026-11-01',
+      endDate: new Date(Date.now() + quoteForm.monthsCount * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] ?? '2027-02-01',
       status: 'ACTIVO',
       lastSuctionDate: 'Pendiente 1ra Entrega',
       digesaCertNumber: `DIG-RES-2026-${Math.floor(5000 + Math.random() * 4000)}`
@@ -769,7 +771,7 @@ export default function InversionesNellyApp() {
       amount: totalMonthly,
       igv: totalMonthly * 0.18,
       total: totalMonthly * 1.18,
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split('T')[0] ?? '2026-11-01',
       sunatStatus: 'ACEPTADO_SUNAT'
     };
     setInvoices(prev => [newInvoice, ...prev]);
@@ -813,7 +815,7 @@ export default function InversionesNellyApp() {
       amount: totalAmount,
       igv: totalAmount * 0.18,
       total: totalAmount * 1.18,
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split('T')[0] ?? '2026-11-01',
       sunatStatus: 'ACEPTADO_SUNAT'
     };
     setInvoices(prev => [newInvoice, ...prev]);
@@ -830,7 +832,7 @@ export default function InversionesNellyApp() {
 
   // Registrar Limpieza / Succión Completada en ERP
   const handleExecuteSuction = (contract: RentalContract) => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0] ?? '2026-11-01';
     const newCert = `DIG-SUCC-${Math.floor(8000 + Math.random() * 1999)}`;
     
     setContracts(prev => prev.map(c => {
