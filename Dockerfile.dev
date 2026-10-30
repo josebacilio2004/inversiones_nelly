@@ -1,0 +1,19 @@
+# ====================================================================
+# INVERSIONES NELLY S.A.C. - DOCKERFILE PARA DESARROLLO LOCAL (DEV)
+# Soporta Hot Module Replacement (HMR) y volumen montado
+# ====================================================================
+
+FROM node:20-alpine
+RUN apk add --no-cache libc6-compat openssl
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+COPY prisma ./prisma/
+
+RUN npm install
+
+EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+CMD ["npm", "run", "dev"]

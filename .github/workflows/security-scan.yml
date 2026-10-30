@@ -1,0 +1,29 @@
+name: Seguridad - Escaneo de Vulnerabilidades (Trivy & SAST)
+
+on:
+  schedule:
+    - cron: '0 3 * * 1' # Cada lunes a las 03:00 UTC
+  pull_request:
+    branches: [main]
+
+jobs:
+  trivy-scan:
+    name: Escaneo de Vulnerabilidades de Contenedor (Trivy)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Código
+        uses: actions/checkout@v4
+
+      - name: Construir Imagen Local
+        run: docker build -t inversiones-nelly-app:scan .
+
+      - name: Ejecutar Escáner Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'inversiones-nelly-app:scan'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'

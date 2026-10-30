@@ -1,0 +1,238 @@
+// ====================================================================
+// INVERSIONES NELLY S.A.C. - PRISMA DATABASE SCHEMA (POSTGRESQL 16)
+// ====================================================================
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [uuidOssp(map: "uuid-ossp"), pgTrgm(map: "pg_trgm")]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+// --------------------------------------------------------------------
+// 1. Directorio Único de Clientes (Personas Naturales y Empresas B2B)
+// --------------------------------------------------------------------
+enum DocType {
+  DNI
+  RUC
+  CE
+  PASAPORTE
+}
+
+enum CustomerSegment {
+  SANITARIOS
+  HOTEL
+  AMBOS
+}
+
+model CoreCustomer {
+  id              String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  docType         DocType         @default(RUC)
+  docNumber       String          @unique @db.VarChar(20)
+  businessName    String          @db.VarChar(200)
+  contactName     String?         @db.VarChar(120)
+  email           String?         @db.VarChar(120)
+  phone           String          @db.VarChar(30)
+  fiscalAddress   String?         @db.Text
+  customerSegment CustomerSegment @default(AMBOS)
+  creditLimit     Decimal         @default(0.00) @db.Decimal(12, 2)
+  createdAt       DateTime        @default(now()) @db.Timestamptz
+  updatedAt       DateTime        @updatedAt @db.Timestamptz
+
+  rentalContracts SanRentalContract[]
+  hotelBookings   HotBooking[]
+  invoices        CoreInvoice[]
+
+  @@index([docNumber])
+  @@index([businessName])
+  @@map("core_customers")
+}
+
+// --------------------------------------------------------------------
+// 2. Dominio Eco-Sanitarios Portátiles (Obras Civiles, Minería, Eventos)
+// --------------------------------------------------------------------
+enum SanitaryCategory {
+  OBRA_MINERIA
+  EVENTOS_VIP
+  DISCAPACITADOS
+  LAVAMANOS
+  DUCHAS
+}
+
+enum ContractStatus {
+  COTIZACION
+  APROBADO
+  ACTIVO
+  FINALIZADO
+  CANCELADO
+}
+
+model SanCatalogModel {
+  id          String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  code        String           @unique @db.VarChar(20)
+  name        String           @db.VarChar(120)
+  category    SanitaryCategory
+  dailyRate   Decimal          @db.Decimal(10, 2)
+  weeklyRate  Decimal          @db.Decimal(10, 2)
+  monthlyRate Decimal          @db.Decimal(10, 2)
+  specs       Json             // TankCapacity, Dimensions, Weight, FlushType, etc.
+  isActive    Boolean          @default(true)
+  createdAt   DateTime         @default(now()) @db.Timestamptz
+
+  contracts SanRentalContract[]
+
+  @@map("san_catalog_models")
+}
+
+model SanRentalContract {
+  id                String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  contractCode      String         @unique @db.VarChar(30)
+  customerId        String         @db.Uuid
+  customer          CoreCustomer   @relation(fields: [customerId], references: [id])
+  modelId           String         @db.Uuid
+  model             SanCatalogModel @relation(fields: [modelId], references: [id])
+  projectName       String         @db.VarChar(160)
+  deliveryAddress   String         @db.Text
+  unitsCount        Int            @default(1)
+  assignedSeries    String[]       // Ej: ['IN-BP-001', 'IN-BP-002']
+  cleaningFrequency String         @db.VarChar(60) // Ej: '2 veces por semana'
+  startDate         DateTime       @db.Date
+  endDate           DateTime       @db.Date
+  monthlyRate       Decimal        @db.Decimal(12, 2)
+  totalAmount       Decimal        @db.Decimal(12, 2)
+  status            ContractStatus @default(ACTIVO)
+  lastSuctionDate   DateTime?      @db.Timestamptz
+  digesaCertNumber  String?        @db.VarChar(50)
+  createdAt         DateTime       @default(now()) @db.Timestamptz
+  updatedAt         DateTime       @updatedAt @db.Timestamptz
+
+  suctionRecords SanSuctionRecord[]
+
+  @@index([contractCode])
+  @@index([customerId])
+  @@map("san_rental_contracts")
+}
+
+model SanSuctionRecord {
+  id               String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  contractId       String            @db.Uuid
+  contract         SanRentalContract @relation(fields: [contractId], references: [id])
+  suctionDate      DateTime          @default(now()) @db.Timestamptz
+  truckPlate       String            @db.VarChar(15) // Cisterna hidrostática
+  operatorName     String            @db.VarChar(100)
+  gallonsExtracted Int               @default(250)
+  chemicalRecharge Boolean           @default(true)
+  manifestNumber   String            @db.VarChar(50)
+  createdAt        DateTime          @default(now()) @db.Timestamptz
+
+  @@map("san_suction_records")
+}
+
+// --------------------------------------------------------------------
+// 3. Dominio Hotel & Hospitalidad Ejecutiva
+// --------------------------------------------------------------------
+enum RoomType {
+  SIMPLE_EJECUTIVA
+  MATRIMONIAL
+  DOBLE_CORPORATIVA
+  SUITE_NELLY
+}
+
+enum RoomStatus {
+  DISPONIBLE
+  OCUPADA
+  LIMPIEZA_PENDIENTE
+  MANTENIMIENTO
+}
+
+enum BookingStatus {
+  PENDIENTE_PAGO
+  CONFIRMADA
+  CHECKED_IN
+  CHECKED_OUT
+  CANCELADA
+}
+
+model HotRoom {
+  id                  String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  roomNumber          String     @unique @db.VarChar(10)
+  floor               Int
+  roomType            RoomType
+  typeName            String     @db.VarChar(60)
+  basePriceNight      Decimal    @db.Decimal(10, 2)
+  corporatePriceNight Decimal    @db.Decimal(10, 2)
+  status              RoomStatus @default(DISPONIBLE)
+  amenities           String[]
+  createdAt           DateTime   @default(now()) @db.Timestamptz
+  updatedAt           DateTime   @updatedAt @db.Timestamptz
+
+  bookings HotBooking[]
+
+  @@index([roomNumber])
+  @@index([status])
+  @@map("hot_rooms")
+}
+
+model HotBooking {
+  id           String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  bookingCode  String        @unique @db.VarChar(30)
+  customerId   String        @db.Uuid
+  customer     CoreCustomer  @relation(fields: [customerId], references: [id])
+  roomId       String        @db.Uuid
+  room         HotRoom       @relation(fields: [roomId], references: [id])
+  checkInDate  DateTime      @db.Date
+  checkOutDate DateTime      @db.Date
+  guestsCount  Int           @default(1)
+  isCorporate  Boolean       @default(false)
+  totalAmount  Decimal       @db.Decimal(12, 2)
+  status       BookingStatus @default(CONFIRMADA)
+  notes        String?       @db.Text
+  createdAt    DateTime      @default(now()) @db.Timestamptz
+  updatedAt    DateTime      @updatedAt @db.Timestamptz
+
+  @@index([bookingCode])
+  @@index([customerId])
+  @@index([roomId])
+  @@map("hot_bookings")
+}
+
+// --------------------------------------------------------------------
+// 4. Facturación Electrónica SUNAT Unificada
+// --------------------------------------------------------------------
+enum InvoiceType {
+  FACTURA
+  BOLETA
+  NOTA_CREDITO
+}
+
+enum SunatStatus {
+  PENDIENTE
+  ENVIADO
+  ACEPTADO_SUNAT
+  RECHAZADO_SUNAT
+}
+
+model CoreInvoice {
+  id           String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  invoiceType  InvoiceType     @default(FACTURA)
+  seriesNumber String          @unique @db.VarChar(20) // Ej: 'F001-0004520'
+  customerId   String          @db.Uuid
+  customer     CoreCustomer    @relation(fields: [customerId], references: [id])
+  businessUnit CustomerSegment
+  subtotal     Decimal         @db.Decimal(12, 2)
+  igv          Decimal         @db.Decimal(12, 2) // 18%
+  total        Decimal         @db.Decimal(12, 2)
+  issueDate    DateTime        @default(now()) @db.Date
+  sunatStatus  SunatStatus     @default(ACEPTADO_SUNAT)
+  xmlHash      String?         @db.VarChar(100)
+  cdrResponse  String?         @db.Text
+  createdAt    DateTime        @default(now()) @db.Timestamptz
+
+  @@index([seriesNumber])
+  @@index([customerId])
+  @@map("core_invoices")
+}

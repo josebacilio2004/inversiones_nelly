@@ -1,0 +1,81 @@
+version: '3.9'
+
+# ====================================================================
+# INVERSIONES NELLY S.A.C. - DOCKER COMPOSE PARA DESARROLLO LOCAL
+# Permite Hot-Reload en tiempo real montando ./src
+# ====================================================================
+
+services:
+  postgres_db:
+    image: postgres:16-alpine
+    container_name: nelly_postgres_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nelly_admin
+      POSTGRES_PASSWORD: NellySecretDev2026!
+      POSTGRES_DB: inversiones_nelly_db
+      TZ: 'America/Lima'
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - nelly_dev_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nelly_admin -d inversiones_nelly_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis_cache:
+    image: redis:7-alpine
+    container_name: nelly_redis_dev
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass NellyRedisDev2026!
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - nelly_dev_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "NellyRedisDev2026!", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  web_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: nelly_nextjs_dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://nelly_admin:NellySecretDev2026!@postgres_db:5432/inversiones_nelly_db?schema=public
+      REDIS_URL: redis://:NellyRedisDev2026!@redis_cache:6379
+      NEXT_PUBLIC_COMPANY_NAME: "Inversiones Nelly S.A.C."
+      NEXT_PUBLIC_RUC: "20608945123"
+      TZ: 'America/Lima'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+      redis_cache:
+        condition: service_healthy
+    networks:
+      - nelly_dev_network
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data:
+
+networks:
+  nelly_dev_network:
+    driver: bridge

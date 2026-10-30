@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Dependencies & Build
+node_modules
+.next
+out
+build
+dist
+coverage
+
+# Environment & Secrets
+.env
+.env*.local
+*.pem
+*.key
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker & CI
+Dockerfile*
+docker-compose*
+.github
+.husky
+
+# IDE & OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
