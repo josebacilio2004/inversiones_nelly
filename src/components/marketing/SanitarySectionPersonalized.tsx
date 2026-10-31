@@ -63,8 +63,8 @@ export const SanitarySectionPersonalized: React.FC = () => {
             <div>
               <div className="relative h-48 w-full overflow-hidden bg-slate-950">
                 <img
-                  src="https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=800&q=80"
-                  alt="Cabinas en frente de obra"
+                  src="/images/sanitary_luxury_obra.jpg"
+                  alt="Cabinas de obra en frente de trabajo"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
@@ -75,7 +75,7 @@ export const SanitarySectionPersonalized: React.FC = () => {
               <div className="p-6">
                 <h3 className="text-lg font-bold text-white mb-2">Cabinas Resistentes de 210 Litros</h3>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  Rotomoldeadas con protección solar anti-UV, trampilla hermética y ventilación cruzada continua para evitar acumulación de malos olores en campo abierto.
+                  Rotomoldeadas con polietileno virgen (HDPE), protección solar anti-UV, trampilla hermética y ventilación cruzada continua para evitar olores en campo abierto.
                 </p>
               </div>
             </div>
@@ -96,8 +96,8 @@ export const SanitarySectionPersonalized: React.FC = () => {
             <div>
               <div className="relative h-48 w-full overflow-hidden bg-slate-950">
                 <img
-                  src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80"
-                  alt="Camión cisterna succión"
+                  src="/images/logistics_peru_network.jpg"
+                  alt="Flota de camiones hidrosuccionadores"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
@@ -129,8 +129,8 @@ export const SanitarySectionPersonalized: React.FC = () => {
             <div>
               <div className="relative h-48 w-full overflow-hidden bg-slate-950">
                 <img
-                  src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80"
-                  alt="Auditoría y control de seguridad en obra"
+                  src="/images/toilet_modern_cabin.png"
+                  alt="Módulos higiénicos con certificación DIGESA"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
@@ -141,7 +141,7 @@ export const SanitarySectionPersonalized: React.FC = () => {
               <div className="p-6">
                 <h3 className="text-lg font-bold text-white mb-2">Certificado Sanitario DIGESA</h3>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  Disposición final de efluentes en rellenos sanitarios autorizados. Entregamos el Manifiesto de Residuos exigido en auditorías de SUNAFIL y OEFA.
+                  Disposición final de efluentes en plantas y rellenos sanitarios autorizados. Entregamos el Manifiesto de Residuos exigido en auditorías de SUNAFIL y OEFA.
                 </p>
               </div>
             </div>

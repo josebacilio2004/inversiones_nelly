@@ -372,106 +372,85 @@ const INITIAL_SAN_MODELS: SanitaryModel[] = [
     code: 'IN-SAN-01',
     name: 'Sanitario Estándar de Obra (Tanque 210L)',
     category: 'OBRA_MINERIA',
-    categoryLabel: 'Construcción & Obras Civiles',
+    categoryLabel: 'Construcción Civil & Obras',
     monthlyRate: 380,
     weeklyRate: 150,
     dailyRate: 65,
     badge: 'Norma G.050 Obligatorio',
-    imageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=800&q=80',
-    description: 'Polietileno de alta densidad (HDPE) con protección UV y ventilación cruzada. Diseñado para trabajo rudo en campamentos y obras civiles.',
+    imageUrl: '/images/sanitary_luxury_obra.jpg',
+    description: 'Polietileno virgen de alta densidad (HDPE) con protección anti-UV y ventilación cruzada continua. Diseñado para trabajo pesado en frentes de obra civil y campamentos.',
     specs: {
       tankCapacity: '210 Litros (~450 usos)',
       dimensions: '1.12m x 1.18m x 2.25m',
       weight: '78 Kg',
-      flushType: 'Gravedad c/ trampilla hermética',
-      sink: 'Opcional externo',
-      normCompliance: 'MINTRA - Norma Técnica G.050'
-    }
+      flushType: 'Gravedad c/ trampilla hermética anti-olor',
+      sink: 'Dispensador alcohol gel integrado',
+      normCompliance: 'MINTRA - Norma Técnica G.050',
+    },
   },
   {
     id: 'm2',
     code: 'IN-SAN-02',
     name: 'Sanitario Ejecutivo VIP (Lavamanos y Bomba de Pie)',
     category: 'EVENTOS_VIP',
-    categoryLabel: 'Ingeniería / Eventos VIP',
+    categoryLabel: 'Ingeniería / Supervisión VIP',
     monthlyRate: 540,
     weeklyRate: 220,
     dailyRate: 95,
     badge: 'Confort Superior',
-    imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
-    description: 'Cabina ejecutiva con lavamanos interno integrado, activación por bomba de pedal higiénica, espejo, perchero y dosificador de jabón antibacterial.',
+    imageUrl: '/images/sanitary_luxury_obra.jpg',
+    description: 'Cabina ejecutiva con lavamanos interno integrado, activación por bomba de pedal 100% manos libres, espejo biselado, perchero y dosificador antibacterial.',
     specs: {
-      tankCapacity: '230 Litros c/ recirculación',
+      tankCapacity: '230 Litros c/ recirculación química',
       dimensions: '1.20m x 1.20m x 2.30m',
       weight: '86 Kg',
       flushType: 'Bomba hidráulica de pie 100% manos libres',
-      sink: 'Lavamanos autónomo integrado c/ espejo',
-      normCompliance: 'Estándar Corporativo & Eventos'
-    }
+      sink: 'Lavamanos autónomo c/ espejo y toallero',
+      normCompliance: 'Estándar Corporativo de Obra',
+    },
   },
   {
     id: 'm3',
     code: 'IN-SAN-03',
-    name: 'Sanitario Accesible para Discapacitados',
+    name: 'Sanitario Accesible Universal (Discapacitados)',
     category: 'DISCAPACITADOS',
-    categoryLabel: 'Inclusión & Universal',
+    categoryLabel: 'Inclusión & Accesibilidad',
     monthlyRate: 650,
     weeklyRate: 260,
     dailyRate: 110,
     badge: 'Ley 29973 Accesibilidad',
-    imageUrl: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80',
-    description: 'Cabina extragrande de nivel cero con rampa de ingreso directo para silla de ruedas, pasamanos de apoyo perimetrales y tanque rebajado.',
+    imageUrl: '/images/toilet_modern_cabin.png',
+    description: 'Cabina extragrande de nivel cero con rampa de ingreso directo para silla de ruedas, pasamanos de apoyo perimetrales de acero inoxidable y tanque rebajado.',
     specs: {
       tankCapacity: '180 Litros',
       dimensions: '1.65m x 1.65m x 2.25m',
       weight: '115 Kg',
       flushType: 'Palanca ergonómica suave al tacto',
-      sink: 'Lavamanos bajo alcance frontal',
-      normCompliance: 'Reglamento Nacional de Edificaciones'
-    }
+      sink: 'Lavamanos bajo de alcance frontal',
+      normCompliance: 'Reglamento Nacional de Edificaciones',
+    },
   },
   {
     id: 'm4',
-    code: 'IN-LAV-01',
-    name: 'Lavamanos Portátil Doble Autónomo',
-    category: 'LAVAMANOS',
-    categoryLabel: 'Higiene & Desinfección',
-    monthlyRate: 320,
-    weeklyRate: 130,
-    dailyRate: 55,
-    badge: 'Bioseguridad DIGESA',
-    imageUrl: 'https://images.unsplash.com/photo-1584772659345-0d04c000f606?auto=format&fit=crop&w=800&q=80',
-    description: 'Estación doble de lavado de manos simultáneo. Funciona con bomba de pedal sin conexión a red de agua ni desagüe exterior.',
+    code: 'IN-SAN-04',
+    name: 'Sanitario Autónomo de Alta Rotación',
+    category: 'OBRA_MINERIA',
+    categoryLabel: 'Mega-Obras & Eventos Masivos',
+    monthlyRate: 590,
+    weeklyRate: 240,
+    dailyRate: 100,
+    badge: 'Alta Densidad',
+    imageUrl: '/images/toilet_modern_cabin.png',
+    description: 'Módulo de saneamiento autónomo de alto tránsito. Puerta corredera con indicador de libre/ocupado, panel solar superior para luz LED y recirculación química reforzada.',
     specs: {
-      tankCapacity: 'Agua limpia 85L | Residual 95L',
-      dimensions: '0.85m x 0.65m x 1.40m',
-      weight: '32 Kg (vacío)',
-      flushType: 'Doble bomba pedal independiente',
-      sink: '2 cubas gemelas con dispensador jabón',
-      normCompliance: 'Protocolos Sanitarios MINSA'
-    }
+      tankCapacity: '250 Litros (~550 usos)',
+      dimensions: '1.25m x 1.25m x 2.35m',
+      weight: '92 Kg',
+      flushType: 'Bomba de doble acción sellada',
+      sink: 'Lavamanos higiénico con pedal',
+      normCompliance: 'Norma Técnica DIGESA / MINSA',
+    },
   },
-  {
-    id: 'm5',
-    code: 'IN-DUC-01',
-    name: 'Módulo de Ducha Portátil de Obra',
-    category: 'DUCHAS',
-    categoryLabel: 'Campamentos & Minería',
-    monthlyRate: 420,
-    weeklyRate: 170,
-    dailyRate: 70,
-    badge: 'Campamentos Lejanos',
-    imageUrl: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80',
-    description: 'Cabina hermética para aseo de personal en turnos rotativos. Piso antideslizante con desagüe perimetral y cortina vinílica de uso pesado.',
-    specs: {
-      tankCapacity: 'Conexión a red o cisterna externa',
-      dimensions: '1.15m x 1.15m x 2.20m',
-      weight: '72 Kg',
-      flushType: 'Grifería economizadora de caudal',
-      sink: 'Rejilla colectora c/ salida 2 pulgadas',
-      normCompliance: 'D.S. 024-2016-EM Minería'
-    }
-  }
 ];
 
 const INITIAL_CONTRACTS: RentalContract[] = [
@@ -536,22 +515,22 @@ const INITIAL_CONTRACTS: RentalContract[] = [
 
 const INITIAL_ROOMS: HotelRoom[] = [
   // Piso 1
-  { id: 'r101', roomNumber: '101', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
-  { id: 'r102', roomNumber: '102', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'OCUPADA', currentGuest: 'Ing. Carlos Mendoza (Consorcio Vial)', checkIn: '2026-10-25', checkOut: '2026-11-05', imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
-  { id: 'r103', roomNumber: '103', floor: 1, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80', amenities: ['Cama Queen', 'Frigobar', 'A/C Frío-Calor', 'Cochera Privada'] },
-  { id: 'r104', roomNumber: '104', floor: 1, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'OCUPADA', currentGuest: 'Supervisores Obra Cosapi (2 pers.)', checkIn: '2026-10-27', checkOut: '2026-11-02', imageUrl: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80', amenities: ['2 Camas 1.5 plazas', 'Casilleros c/ llave', 'Cochera para Camioneta 4x4'] },
+  { id: 'r101', roomNumber: '101', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
+  { id: 'r102', roomNumber: '102', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'OCUPADA', currentGuest: 'Ing. Carlos Mendoza (Consorcio Vial)', checkIn: '2026-10-25', checkOut: '2026-11-05', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
+  { id: 'r103', roomNumber: '103', floor: 1, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'DISPONIBLE', imageUrl: '/images/hotel_glasshaven_plan.png', amenities: ['Cama Queen', 'Frigobar', 'A/C Frío-Calor', 'Cochera Privada'] },
+  { id: 'r104', roomNumber: '104', floor: 1, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'OCUPADA', currentGuest: 'Supervisores Obra Cosapi (2 pers.)', checkIn: '2026-10-27', checkOut: '2026-11-02', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['2 Camas 1.5 plazas', 'Casilleros c/ llave', 'Cochera para Camioneta 4x4'] },
 
   // Piso 2
-  { id: 'r201', roomNumber: '201', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'LIMPIEZA_PENDIENTE', imageUrl: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Escritorio de Obra', 'Smart TV'] },
-  { id: 'r202', roomNumber: '202', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente'] },
-  { id: 'r203', roomNumber: '203', floor: 2, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'OCUPADA', currentGuest: 'Lic. Mariana Valdivia (Auditora)', checkIn: '2026-10-28', checkOut: '2026-10-31', imageUrl: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80', amenities: ['Cama Queen', 'Frigobar', 'Balcón'] },
-  { id: 'r204', roomNumber: '204', floor: 2, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80', amenities: ['2 Camas 1.5 plazas', 'Wi-Fi Alta Velocidad', 'Cochera'] },
+  { id: 'r201', roomNumber: '201', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'LIMPIEZA_PENDIENTE', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['Wi-Fi 200Mbps', 'Escritorio de Obra', 'Smart TV'] },
+  { id: 'r202', roomNumber: '202', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente'] },
+  { id: 'r203', roomNumber: '203', floor: 2, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'OCUPADA', currentGuest: 'Lic. Mariana Valdivia (Auditora)', checkIn: '2026-10-28', checkOut: '2026-10-31', imageUrl: '/images/hotel_glasshaven_plan.png', amenities: ['Cama Queen', 'Frigobar', 'Balcón'] },
+  { id: 'r204', roomNumber: '204', floor: 2, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'DISPONIBLE', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['2 Camas 1.5 plazas', 'Wi-Fi Alta Velocidad', 'Cochera'] },
 
   // Piso 3
-  { id: 'r301', roomNumber: '301', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Smart TV'] },
-  { id: 'r302', roomNumber: '302', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'MANTENIMIENTO', imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80', amenities: ['En remodelación de pintura'] },
-  { id: 'r303', roomNumber: '303', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80', amenities: ['Cama King', 'Sala de Reuniones de Obra', 'Kitchenette', 'Hidromasaje'] },
-  { id: 'r304', roomNumber: '304', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'OCUPADA', currentGuest: 'Gerencia Minera Chinalco', checkIn: '2026-10-26', checkOut: '2026-11-04', imageUrl: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80', amenities: ['Cama King', 'Sala Ejecutiva', 'Kitchenette'] }
+  { id: 'r301', roomNumber: '301', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Smart TV'] },
+  { id: 'r302', roomNumber: '302', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'MANTENIMIENTO', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['En remodelación de pintura'] },
+  { id: 'r303', roomNumber: '303', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'DISPONIBLE', imageUrl: '/images/hotel_glasshaven_plan.png', amenities: ['Cama King', 'Sala de Reuniones de Obra', 'Kitchenette', 'Hidromasaje'] },
+  { id: 'r304', roomNumber: '304', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'OCUPADA', currentGuest: 'Gerencia Minera Chinalco', checkIn: '2026-10-26', checkOut: '2026-11-04', imageUrl: '/images/hotel_luxury_cover.png', amenities: ['Cama King', 'Sala Ejecutiva', 'Kitchenette'] }
 ];
 
 const INITIAL_INVOICES: Invoice[] = [
@@ -1315,7 +1294,7 @@ export default function InversionesNellyApp() {
                 <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
                   <div className="h-44 w-full overflow-hidden bg-slate-900 relative">
                     <img 
-                      src="https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=800&q=80" 
+                      src="/images/sanitary_luxury_obra.jpg" 
                       alt="Baños de Obra" 
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                       loading="lazy"
@@ -1340,7 +1319,7 @@ export default function InversionesNellyApp() {
                 <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
                   <div className="h-44 w-full overflow-hidden bg-slate-900 relative">
                     <img 
-                      src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80" 
+                      src="/images/logistics_peru_network.jpg" 
                       alt="Camión Cisterna Succión" 
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                       loading="lazy"
@@ -1365,7 +1344,7 @@ export default function InversionesNellyApp() {
                 <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
                   <div className="h-44 w-full overflow-hidden bg-slate-900 relative">
                     <img 
-                      src="https://images.unsplash.com/photo-1584772659345-0d04c000f606?auto=format&fit=crop&w=800&q=80" 
+                      src="/images/toilet_modern_cabin.png" 
                       alt="Certificado DIGESA" 
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                       loading="lazy"
@@ -1428,10 +1407,10 @@ export default function InversionesNellyApp() {
                 {/* Grid de Habitaciones con Fotografía Real */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
                   {[
-                    { title: 'Simple Ejecutiva', img: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80', price: 'S/ 85', desc: 'Escritorio de trabajo, Wi-Fi 200Mbps, baño privado' },
-                    { title: 'Matrimonial Superior', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80', price: 'S/ 115', desc: 'Cama Queen ortopédica, Smart TV 55", aire acondicionado' },
-                    { title: 'Doble Contratistas', img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80', price: 'S/ 130', desc: '2 camas 1.5 plazas, ideal para parejas de supervisores' },
-                    { title: 'Suite Nelly Presidencial', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80', price: 'S/ 220', desc: 'Cama King, sala privada de coordinación de obra y jacuzzi' }
+                    { title: 'Simple Ejecutiva', img: '/images/hotel_luxury_cover.png', price: 'S/ 85', desc: 'Escritorio de trabajo, Wi-Fi 200Mbps, baño privado' },
+                    { title: 'Matrimonial Superior', img: '/images/hotel_glasshaven_plan.png', price: 'S/ 115', desc: 'Cama Queen ortopédica, Smart TV 55", aire acondicionado' },
+                    { title: 'Doble Contratistas', img: '/images/hotel_luxury_cover.png', price: 'S/ 130', desc: '2 camas 1.5 plazas, ideal para parejas de supervisores' },
+                    { title: 'Suite Nelly Presidencial', img: '/images/hotel_glasshaven_plan.png', price: 'S/ 220', desc: 'Cama King, sala privada de coordinación de obra y jacuzzi' }
                   ].map((h, i) => (
                     <div key={i} className="bg-slate-800/80 rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between group">
                       <div>

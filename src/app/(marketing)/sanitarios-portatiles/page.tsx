@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { StickyQuoteForm } from '@/components/marketing/StickyQuoteForm';
 import { G050Calculator } from '@/components/marketing/G050Calculator';
 import { SanitaryCatalogGrid } from '@/components/marketing/SanitaryCatalogGrid';
+import { PeruInteractiveMap } from '@/components/marketing/PeruInteractiveMap';
 import { Icons } from '@/components/ui/Icons';
 
 export default function SanitariosPage() {
@@ -13,41 +14,73 @@ export default function SanitariosPage() {
   });
 
   return (
-    <div className="pb-16">
-      {/* 1. HERO B2B CON FORMULARIO STICKY DE COTIZACIÓN */}
-      <section className="bg-gradient-to-b from-slate-900 to-[#142312] text-white py-12 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div className="lg:col-span-7 pt-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6CBE1A]/20 border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-bold uppercase mb-4">
+    <div className="pb-16 bg-[#0B1322]">
+      {/* 1. HERO LOGÍSTICO Y CENTRO DE OPERACIONES (INSPIRADO EN GLOBALLINK LOGISTICS) */}
+      <section className="relative bg-[#0F172A] text-white py-14 px-4 sm:px-6 overflow-hidden border-b border-slate-800">
+        {/* Background logístico de alta tecnología */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/logistics_peru_network.jpg"
+            alt="Red Logística y de Saneamiento Inversiones Nelly"
+            className="w-full h-full object-cover opacity-20 filter contrast-125"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#6CBE1A]/15 via-transparent to-transparent pointer-events-none" />
+        </div>
+
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+          <div className="lg:col-span-7 pt-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#6CBE1A]/20 border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-mono font-bold uppercase mb-4">
               <Icons.Truck className="w-4 h-4" />
-              Flota Homologada a Nivel Nacional
+              Red Nacional de Saneamiento • Res. DIGESA N° DIG-2024
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white mb-4">
-              Alquiler de <span className="text-[#6CBE1A]">Sanitarios Portátiles</span> para Obras Civiles y Minería
+            <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white mb-4">
+              Alquiler & Mantenimiento de{' '}
+              <span className="text-[#6CBE1A]">Baños Portátiles</span> en Todo el Perú
             </h1>
 
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
-              Cumplimiento irrestricto de la <strong>Norma Técnica G.050</strong>. Proveemos cabinas de alta durabilidad en polietileno virgen (HDPE), mantenimiento con camión cisterna al vacío y disposición final en rellenos sanitarios certificados por DIGESA.
+              Flota especializada de <strong>baños portátiles de alto tránsito</strong> bajo la <strong>Norma Técnica G.050</strong>. Operamos con camiones hidrosuccionadores al vacío propios, químicos biodegradables de grado industrial y entrega inmediata de manifiestos ambientales DIGESA para auditorías de SUNAFIL y OEFA.
             </p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-slate-300">
-              <div className="flex items-center gap-2">
-                <Icons.CheckCircle className="w-4 h-4 text-[#6CBE1A] shrink-0" />
-                <span>Tanques 210L de gran autonomía</span>
+            {/* KPI Bar estilo GlobalLink */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 mb-6">
+              <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl">
+                <div className="text-2xl font-black text-[#6CBE1A] font-mono">+1,250</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">Baños en Obra</div>
               </div>
-              <div className="flex items-center gap-2">
-                <Icons.CheckCircle className="w-4 h-4 text-[#00A8E8] shrink-0" />
+              <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl">
+                <div className="text-2xl font-black text-[#00A8E8] font-mono">100%</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">Camiones Propios</div>
+              </div>
+              <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl">
+                <div className="text-2xl font-black text-[#C8A064] font-mono">18 Reg.</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">Cobertura Nacional</div>
+              </div>
+              <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl">
+                <div className="text-2xl font-black text-white font-mono">DIGESA</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">Residuos Sólidos</div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3 text-xs text-slate-300">
+              <div className="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded-xl border border-slate-700/60">
+                <Icons.Check className="w-4 h-4 text-[#6CBE1A]" />
+                <span>Tanques 210L de ~450 usos</span>
+              </div>
+              <div className="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded-xl border border-slate-700/60">
+                <Icons.Check className="w-4 h-4 text-[#00A8E8]" />
                 <span>Bomba de pedal 100% manos libres</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Icons.CheckCircle className="w-4 h-4 text-[#6CBE1A] shrink-0" />
-                <span>Manifiesto DIGESA de residuos</span>
+              <div className="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded-xl border border-slate-700/60">
+                <Icons.Check className="w-4 h-4 text-[#6CBE1A]" />
+                <span>Succión y lavado a presión programado</span>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-5">
+          <div id="sticky-quote-form" className="lg:col-span-5">
             <StickyQuoteForm
               initialUnits={quotePrefill.units}
               initialFrequency={quotePrefill.frequency}
@@ -56,7 +89,12 @@ export default function SanitariosPage() {
         </div>
       </section>
 
-      {/* 2. WIDGET CALCULADORA NORMA G.050 */}
+      {/* 2. MAPA INTERACTIVO DEL PERÚ CON CLIENTES Y OPERACIONES EN TIEMPO REAL */}
+      <section className="py-14 px-4 sm:px-6 max-w-7xl mx-auto">
+        <PeruInteractiveMap />
+      </section>
+
+      {/* 3. WIDGET CALCULADORA NORMA G.050 */}
       <section id="g050-calculator" className="py-14 px-4 max-w-7xl mx-auto">
         <G050Calculator
           onTransferToQuote={(data) => {
@@ -65,31 +103,31 @@ export default function SanitariosPage() {
         />
       </section>
 
-      {/* 3. CATÁLOGO TÉCNICO INTERACTIVO */}
+      {/* 4. CATÁLOGO TÉCNICO EXCLUSIVO DE BAÑOS PORTÁTILES */}
       <section className="py-12 px-4 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <span className="text-xs font-bold text-[#2E5A07] uppercase tracking-wider bg-[#6CBE1A]/20 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold text-[#6CBE1A] uppercase tracking-wider bg-[#6CBE1A]/20 px-3 py-1 rounded-full border border-[#6CBE1A]/30">
             Equipamiento de Grado Industrial
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
-            Catálogo Técnico de Sanitarios & Módulos Higiénicos
+          <h2 className="text-2xl sm:text-4xl font-black text-white mt-3">
+            Catálogo Exclusivo de Baños Portátiles de Obra
           </h2>
-          <p className="text-slate-600 text-xs sm:text-sm mt-1">
-            Modelos rotomoldeados con garantía de higiene, estanqueidad y resistencia para las condiciones climáticas del Perú.
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">
+            Modelos rotomoldeados en polietileno virgen (HDPE) con estanqueidad garantizada y succión al vacío certificada por DIGESA.
           </p>
         </div>
 
         <SanitaryCatalogGrid />
       </section>
 
-      {/* 4. CICLO OPERATIVO DEL SERVICIO EN 4 PASOS */}
-      <section className="bg-slate-900 text-white py-14 px-4">
+      {/* 5. CICLO OPERATIVO DEL SERVICIO EN 4 PASOS */}
+      <section className="bg-slate-900/80 text-white py-16 px-4 border-t border-slate-800">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs font-bold text-[#00A8E8] uppercase tracking-wider">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-bold text-[#00A8E8] uppercase tracking-wider bg-[#00A8E8]/20 px-3 py-1 rounded-full border border-[#00A8E8]/30">
               Procedimiento Estandarizado DIGESA
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">
+            <h2 className="text-2xl sm:text-3xl font-black text-white mt-2">
               Ciclo de Servicio de Succión e Higiene
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm mt-1">
@@ -99,15 +137,17 @@ export default function SanitariosPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { step: '01', title: 'Entrega en Obra', desc: 'Descarga con camión grúa plataforma y nivelación sobre terreno según el plano de seguridad.' },
-              { step: '02', title: 'Succión Hidrostática', desc: 'Evacuación de lodos al vacío con manguera de alta presión hermética. Cero derrames.' },
-              { step: '03', title: 'Químicos Biodegradables', desc: 'Lavado con hidrolavadora, recarga de bactericida aromático azul y dotación de papel higiénico.' },
-              { step: '04', title: 'Certificado DIGESA', desc: 'Firma de guía de succión y emisión del manifiesto ambiental exigido por SUNAFIL y OEFA.' },
+              { step: '01', title: 'Entrega en Obra', desc: 'Descarga con camión grúa plataforma y nivelación sobre terreno según el plano de seguridad de obra.' },
+              { step: '02', title: 'Succión Hidrostática', desc: 'Evacuación de lodos al vacío con manguera hermética de 2.5 pulgadas. Cero derrames garantizado.' },
+              { step: '03', title: 'Químicos Biodegradables', desc: 'Lavado a presión, recarga de bactericida aromático azul y reposición de insumos de higiene.' },
+              { step: '04', title: 'Certificado DIGESA', desc: 'Firma de guía de succión y entrega de Manifiesto de Residuos Sólidos para auditorías de SUNAFIL.' },
             ].map((s) => (
-              <div key={s.step} className="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 relative">
-                <div className="text-4xl font-black text-[#6CBE1A]/30 mb-2 font-mono">{s.step}</div>
-                <h3 className="text-base font-bold text-white mb-2">{s.title}</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">{s.desc}</p>
+              <div key={s.step} className="bg-slate-800/80 p-6 rounded-3xl border border-slate-700/80 relative flex flex-col justify-between">
+                <div>
+                  <div className="text-4xl font-black text-[#6CBE1A]/30 mb-2 font-mono">{s.step}</div>
+                  <h3 className="text-base font-bold text-white mb-2">{s.title}</h3>
+                  <p className="text-xs text-slate-300 leading-relaxed">{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>

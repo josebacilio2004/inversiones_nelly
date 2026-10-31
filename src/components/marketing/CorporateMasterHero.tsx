@@ -98,23 +98,23 @@ export const CorporateMasterHero: React.FC = () => {
               transition={{ duration: 0.7, delay: 0.4 }}
               className="flex flex-wrap items-center gap-4 pt-3"
             >
-              <a
-                href="#enfoque-sanitarios"
+              <Link
+                href="/sanitarios-portatiles"
                 className="bg-[#6CBE1A] hover:bg-[#5da715] text-slate-950 font-black px-6 py-3.5 rounded-2xl shadow-lg shadow-[#6CBE1A]/25 transition flex items-center gap-2 text-sm"
               >
                 <Icons.Truck className="w-4 h-4" />
                 División Eco-Sanitarios Portátiles
                 <Icons.ChevronRight className="w-4 h-4" />
-              </a>
+              </Link>
 
-              <a
-                href="#enfoque-hotel"
+              <Link
+                href="/hotel"
                 className="bg-[#C8A064] hover:bg-[#b88f4e] text-slate-950 font-black px-6 py-3.5 rounded-2xl shadow-lg shadow-[#C8A064]/25 transition flex items-center gap-2 text-sm"
               >
                 <Icons.Bed className="w-4 h-4" />
                 División Hotel & Hospedaje
                 <Icons.ChevronRight className="w-4 h-4" />
-              </a>
+              </Link>
 
               <Link
                 href="/convenio-constructora"
@@ -128,76 +128,74 @@ export const CorporateMasterHero: React.FC = () => {
           {/* Columna Derecha: Tarjetas de las 2 Divisiones */}
           <div className="lg:col-span-5 space-y-4">
             {/* Card División Sanitarios */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              whileHover={{ scale: 1.02 }}
-              className="group relative bg-gradient-to-r from-slate-900 to-[#142312] border-2 border-[#6CBE1A]/30 rounded-3xl p-5 shadow-2xl overflow-hidden cursor-pointer"
-              onClick={() => {
-                document.getElementById('enfoque-sanitarios')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-800 shrink-0 border border-[#6CBE1A]/40">
-                  <img
-                    src="https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=400&q=80"
-                    alt="Sanitarios de obra"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+            <Link href="/sanitarios-portatiles" className="block">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                whileHover={{ scale: 1.02 }}
+                className="group relative bg-gradient-to-r from-slate-900 to-[#142312] border-2 border-[#6CBE1A]/30 rounded-3xl p-5 shadow-2xl overflow-hidden cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-800 shrink-0 border border-[#6CBE1A]/40">
+                    <img
+                      src="/images/sanitary_luxury_obra.jpg"
+                      alt="Sanitarios de obra en frente de trabajo"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-[10px] font-bold text-[#6CBE1A] uppercase tracking-wider bg-[#6CBE1A]/15 px-2.5 py-0.5 rounded-full inline-block">
+                      Sector Industrial & Construcción
+                    </span>
+                    <h3 className="text-base font-black text-white mt-1 group-hover:text-[#6CBE1A] transition">
+                      Eco-Sanitarios Portátiles
+                    </h3>
+                    <p className="text-xs text-slate-300 line-clamp-2 mt-0.5">
+                      Cabinas HDPE 210L, succión con camión cisterna al vacío e insumos biodegradables.
+                    </p>
+                  </div>
+                  <div className="p-2 rounded-xl bg-[#6CBE1A]/20 text-[#6CBE1A] shrink-0">
+                    <Icons.ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <span className="text-[10px] font-bold text-[#6CBE1A] uppercase tracking-wider bg-[#6CBE1A]/15 px-2.5 py-0.5 rounded-full inline-block">
-                    Sector Industrial & Construcción
-                  </span>
-                  <h3 className="text-base font-black text-white mt-1 group-hover:text-[#6CBE1A] transition">
-                    Eco-Sanitarios Portátiles
-                  </h3>
-                  <p className="text-xs text-slate-300 line-clamp-2 mt-0.5">
-                    Cabinas HDPE 210L, succión con camión cisterna al vacío e insumos biodegradables.
-                  </p>
-                </div>
-                <div className="p-2 rounded-xl bg-[#6CBE1A]/20 text-[#6CBE1A] shrink-0">
-                  <Icons.ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
 
             {/* Card División Hotel */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              whileHover={{ scale: 1.02 }}
-              className="group relative bg-gradient-to-r from-slate-900 to-[#221B13] border-2 border-[#C8A064]/30 rounded-3xl p-5 shadow-2xl overflow-hidden cursor-pointer"
-              onClick={() => {
-                document.getElementById('enfoque-hotel')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-800 shrink-0 border border-[#C8A064]/40">
-                  <img
-                    src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=400&q=80"
-                    alt="Habitación de hotel"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+            <Link href="/hotel" className="block">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+                whileHover={{ scale: 1.02 }}
+                className="group relative bg-gradient-to-r from-slate-900 to-[#221B13] border-2 border-[#C8A064]/30 rounded-3xl p-5 shadow-2xl overflow-hidden cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-800 shrink-0 border border-[#C8A064]/40">
+                    <img
+                      src="/images/hotel_luxury_cover.png"
+                      alt="Hotel Nelly Alojamiento Ejecutivo"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-[10px] font-bold text-[#E5C388] uppercase tracking-wider bg-[#C8A064]/15 px-2.5 py-0.5 rounded-full inline-block">
+                      Hospitalidad & Hospedaje
+                    </span>
+                    <h3 className="text-base font-black text-white mt-1 group-hover:text-[#C8A064] transition">
+                      Hotel Nelly Ejecutivo
+                    </h3>
+                    <p className="text-xs text-slate-300 line-clamp-2 mt-0.5">
+                      Cochera cerrada para 4x4, desayuno desde las 05:30 AM y factura SUNAT unificada.
+                    </p>
+                  </div>
+                  <div className="p-2 rounded-xl bg-[#C8A064]/20 text-[#C8A064] shrink-0">
+                    <Icons.ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <span className="text-[10px] font-bold text-[#E5C388] uppercase tracking-wider bg-[#C8A064]/15 px-2.5 py-0.5 rounded-full inline-block">
-                    Hospitalidad & Hospedaje
-                  </span>
-                  <h3 className="text-base font-black text-white mt-1 group-hover:text-[#C8A064] transition">
-                    Hotel Nelly Ejecutivo
-                  </h3>
-                  <p className="text-xs text-slate-300 line-clamp-2 mt-0.5">
-                    Descanso para ingenieros y cuadrillas. Cocheras para camionetas 4x4 y desayuno a campo.
-                  </p>
-                </div>
-                <div className="p-2 rounded-xl bg-[#C8A064]/20 text-[#C8A064] shrink-0">
-                  <Icons.ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           </div>
 
         </div>

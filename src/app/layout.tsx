@@ -24,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="scroll-smooth">
-      <body className="antialiased selection:bg-[#6CBE1A] selection:text-white">
+    <html lang="es" className="scroll-smooth" suppressHydrationWarning>
+      <body className="antialiased selection:bg-[#6CBE1A] selection:text-white" suppressHydrationWarning>
         <ToastContainer />
         {children}
       </body>
