@@ -97,7 +97,7 @@ export const SanitaryCatalogGrid: React.FC = () => {
   const showToast = useAppStore((state) => state.showToast);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {CATALOG_MODELS.map((model, idx) => (
         <motion.div
           key={model.id}
@@ -177,18 +177,20 @@ export const SanitaryCatalogGrid: React.FC = () => {
             </div>
           </div>
 
-          {/* Botón de Selección Rápida */}
           <div className="p-4 pt-0">
-            <button
+            <a
+              href="#sticky-quote-form"
               onClick={() => {
-                showToast('Modelo Seleccionado', `${model.name} cargado en el formulario`, 'info');
-                document.getElementById('sticky-quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                showToast(
+                  'Modelo Seleccionado para Cotización',
+                  `Has seleccionado el modelo ${model.name}. Completa el formulario para recibir la propuesta formal.`,
+                  'info'
+                );
               }}
-              className="w-full bg-[#2E5A07] hover:bg-[#234505] text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-sm"
+              className="w-full block text-center bg-[#2E5A07] hover:bg-[#234505] text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm"
             >
-              <Icons.CheckCircle className="w-4 h-4 text-[#6CBE1A]" />
-              Seleccionar para Cotizar
-            </button>
+              Cotizar este Sanitario
+            </a>
           </div>
         </motion.div>
       ))}

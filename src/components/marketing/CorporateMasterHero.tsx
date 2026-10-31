@@ -4,12 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Icons } from '@/components/ui/Icons';
-import { NellyLogo } from '@/components/brand/NellyLogo';
 
 export const CorporateMasterHero: React.FC = () => {
   return (
     <section className="relative min-h-[640px] lg:min-h-[720px] bg-[#0B1322] text-white overflow-hidden flex items-center">
-      {/* Background con imagen y overlay de alto contraste */}
+      {/* Background vectorial y atmósfera corporativa */}
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80"
@@ -83,7 +82,7 @@ export const CorporateMasterHero: React.FC = () => {
               </div>
               <div className="bg-slate-900/80 border border-slate-800 p-3.5 rounded-2xl backdrop-blur-md">
                 <div className="text-xl sm:text-2xl font-black text-[#C8A064] font-mono">DIGESA</div>
-                <div className="text-[11px] text-slate-400 leading-tight mt-0.5">Certificación N° DIG-2024</div>
+                <div className="text-[11px] text-slate-400 leading-tight mt-0.5">Certificación Nº DIG-2024</div>
               </div>
               <div className="bg-slate-900/80 border border-slate-800 p-3.5 rounded-2xl backdrop-blur-md">
                 <div className="text-xl sm:text-2xl font-black text-white font-mono">24/7</div>

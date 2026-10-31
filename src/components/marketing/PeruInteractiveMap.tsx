@@ -98,7 +98,7 @@ const HUBS: OperationHub[] = [
     suctionStatus: 'PROGRAMADO_MANANA',
     assignedTruck: 'Camión Cisterna 4x4 IN-SUC-05',
     driverName: 'Tco. Carlos Mendoza',
-    lastService: 'Ayer 16:00 hrs',
+    lastService: 'Ayer 16:40 hrs',
     digesaCert: 'DIG-RES-2026-4780',
     sector: 'Minería',
   },
@@ -182,22 +182,23 @@ export const PeruInteractiveMap: React.FC = () => {
       (h) =>
         h.contractCode.toLowerCase().includes(query) ||
         h.clientName.toLowerCase().includes(query) ||
-        h.name.toLowerCase().includes(query) ||
-        h.department.toLowerCase().includes(query)
+        h.department.toLowerCase().includes(query) ||
+        h.name.toLowerCase().includes(query)
     );
 
     if (match) {
       setSelectedHub(match);
       setSearchResult(match);
     } else {
-      setSearchResult(null);
+      alert(`No se encontró ningún servicio activo para "${searchCode}". Prueba con "Lima", "Cosapi" o "CTR-2026-089".`);
     }
   };
 
   return (
-    <section className="bg-[#0B1322] text-white py-16 px-4 sm:px-6 lg:px-8 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
-      {/* Background decorativo de radar */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-950/20 via-transparent to-transparent pointer-events-none" />
+    <section className="bg-[#0B1322] text-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#00A8E8]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#6CBE1A]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Cabecera del Centro de Comando Logístico */}
       <div className="max-w-4xl mx-auto text-center mb-10 relative z-10">
@@ -303,20 +304,20 @@ export const PeruInteractiveMap: React.FC = () => {
                 />
               ))}
 
-              {/* Nodos Interactivos (Puntos sobre el mapa) */}
+              {/* Renderizado de Nodos de Operación */}
               {HUBS.map((hub) => {
                 const isSelected = selectedHub.id === hub.id;
                 return (
                   <g
                     key={hub.id}
-                    className="cursor-pointer group"
                     onClick={() => setSelectedHub(hub)}
+                    className="cursor-pointer group"
                   >
-                    {/* Anillo Pulsante */}
+                    {/* Anillo Pulsante para Nodos Activos */}
                     <circle
                       cx={hub.coords.x}
                       cy={hub.coords.y}
-                      r={isSelected ? 16 : 9}
+                      r={isSelected ? 18 : 10}
                       fill={isSelected ? '#6CBE1A' : '#00A8E8'}
                       opacity={isSelected ? 0.3 : 0.15}
                       className="animate-ping"
@@ -395,10 +396,10 @@ export const PeruInteractiveMap: React.FC = () => {
                   }`}
                 >
                   {selectedHub.suctionStatus === 'EN_RUTA'
-                    ? '🚚 Camión en Ruta'
+                    ? '⚡ Camión en Ruta'
                     : selectedHub.suctionStatus === 'COMPLETADO_HOY'
                     ? '✓ Succión Completada Hoy'
-                    : '📅 Programado Mañana'}
+                    : '⏳ Programado Mañana'}
                 </span>
               </div>
 
@@ -419,25 +420,20 @@ export const PeruInteractiveMap: React.FC = () => {
                     {selectedHub.unitsDeployed}{' '}
                     <span className="text-xs font-normal text-slate-400">unidades</span>
                   </div>
+                  <div className="text-[11px] text-slate-500 mt-0.5 truncate">{selectedHub.model}</div>
                 </div>
 
                 <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
                   <div className="text-[10px] text-slate-400 font-bold uppercase">Última Succión</div>
-                  <div className="text-base font-bold text-white font-mono mt-1">
-                    {selectedHub.lastService}
-                  </div>
+                  <div className="text-2xl font-black text-[#00A8E8] font-mono">{selectedHub.lastService}</div>
+                  <div className="text-[11px] text-emerald-400 mt-0.5">Tanque 210L Vaciado 100%</div>
                 </div>
               </div>
 
-              {/* Especificaciones Técnicas del Servicio */}
-              <div className="space-y-2 text-xs text-slate-300 border-t border-slate-800 pt-4">
+              {/* Detalle Técnico de Telemetría */}
+              <div className="space-y-2 text-xs bg-slate-950/60 p-4 rounded-2xl border border-slate-800/80">
                 <div className="flex justify-between items-center py-1 border-b border-slate-800/60">
-                  <span className="text-slate-400">Modelo Desplegado:</span>
-                  <span className="font-bold text-white text-right">{selectedHub.model}</span>
-                </div>
-
-                <div className="flex justify-between items-center py-1 border-b border-slate-800/60">
-                  <span className="text-slate-400">Camión Cisterna Asignado:</span>
+                  <span className="text-slate-400">Unidad de Succión:</span>
                   <span className="font-bold text-[#00A8E8] text-right">{selectedHub.assignedTruck}</span>
                 </div>
 
@@ -469,7 +465,7 @@ export const PeruInteractiveMap: React.FC = () => {
                 </a>
                 <button
                   onClick={() => {
-                    alert(`Descargando copia legal certificada del Manifiesto de Residuos Sólidos DIGESA N° ${selectedHub.digesaCert} para ${selectedHub.clientName}. Válido para auditorías SUNAFIL.`);
+                    alert(`Descargando copia legal certificada del Manifiesto de Residuos Sólidos DIGESA Nº ${selectedHub.digesaCert} para ${selectedHub.clientName}. Válido para auditorías SUNAFIL.`);
                   }}
                   className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3.5 py-3 rounded-xl text-xs font-semibold border border-slate-700 transition flex items-center gap-1.5"
                   title="Descargar Certificado DIGESA"
@@ -482,6 +478,109 @@ export const PeruInteractiveMap: React.FC = () => {
           </AnimatePresence>
         </div>
 
+      </div>
+
+      {/* ==================================================================== */}
+      {/* 3. TRACK YOUR SERVICE & TELEMETRÍA EN VIVO (ESTILO GLOBALLINK CAPTURA 3) */}
+      {/* ==================================================================== */}
+      <div className="mt-14 pt-10 border-t border-slate-800 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          {/* Columna Izquierda: Stepper de Seguimiento en Tiempo Real */}
+          <div className="lg:col-span-7 bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-800">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <span className="text-[10px] font-mono text-[#00A8E8] font-bold uppercase tracking-wider">
+                  Live Service Tracking
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white mt-0.5">
+                  Trazabilidad Total del Servicio en Obra
+                </h3>
+              </div>
+              <span className="font-mono text-xs text-[#6CBE1A] bg-[#6CBE1A]/10 border border-[#6CBE1A]/30 px-3 py-1 rounded-lg">
+                {selectedHub.contractCode}
+              </span>
+            </div>
+
+            {/* Stepper Vertical con Hitos */}
+            <div className="space-y-6 relative pl-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-800">
+              
+              {/* Hito 1 */}
+              <div className="relative">
+                <div className="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-900" />
+                <div className="text-xs font-bold text-white">Despliegue y Nivelación de Cabinas</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">
+                  {selectedHub.unitsDeployed} Sanitarios instalados en frente de trabajo según plano de seguridad.
+                </div>
+              </div>
+
+              {/* Hito 2 */}
+              <div className="relative">
+                <div className="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-900" />
+                <div className="text-xs font-bold text-white">Última Succión Hidrostática al Vacío</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">
+                  Completada con éxito: <strong className="text-white font-mono">{selectedHub.lastService}</strong> por {selectedHub.assignedTruck}.
+                </div>
+              </div>
+
+              {/* Hito 3 */}
+              <div className="relative">
+                <div className={`absolute -left-6 top-1 w-3.5 h-3.5 rounded-full border-2 border-slate-900 ${
+                  selectedHub.suctionStatus === 'EN_RUTA' ? 'bg-amber-400 animate-pulse' : 'bg-blue-500'
+                }`} />
+                <div className="text-xs font-bold text-white flex items-center gap-2">
+                  <span>Próximo Mantenimiento Programado</span>
+                  <span className={`text-[10px] px-2 py-0.5 rounded font-mono ${
+                    selectedHub.suctionStatus === 'EN_RUTA' ? 'bg-amber-400/20 text-amber-300' : 'bg-blue-900 text-blue-200'
+                  }`}>
+                    {selectedHub.suctionStatus === 'EN_RUTA' ? 'CAMIÓN EN RUTA' : 'EN PROGRAMACIÓN'}
+                  </span>
+                </div>
+                <div className="text-[11px] text-slate-400 mt-0.5">
+                  Operador asignado: {selectedHub.driverName}.
+                </div>
+              </div>
+
+              {/* Hito 4 */}
+              <div className="relative">
+                <div className="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-900" />
+                <div className="text-xs font-bold text-white">Manifiesto Oficial DIGESA Emitido</div>
+                <div className="text-[11px] text-slate-400 mt-0.5">
+                  Certificado <span className="text-amber-300 font-mono font-bold">{selectedHub.digesaCert}</span> registrado para auditorías SUNAFIL.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Columna Derecha: Tarjetas de Métricas Operativas GlobalLink */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
+            <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-lg">
+              <div className="text-2xl sm:text-3xl font-black text-white font-mono">4,892</div>
+              <div className="text-xs font-bold text-[#6CBE1A] mt-1">Servicios de Succión</div>
+              <div className="text-[10px] text-slate-400 mt-0.5">Ejecutados sin derrames</div>
+            </div>
+
+            <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-lg">
+              <div className="text-2xl sm:text-3xl font-black text-[#00A8E8] font-mono">98.7%</div>
+              <div className="text-xs font-bold text-white mt-1">Puntualidad en Ruta</div>
+              <div className="text-[10px] text-slate-400 mt-0.5">Cumplimiento de horario de obra</div>
+            </div>
+
+            <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-lg">
+              <div className="text-2xl sm:text-3xl font-black text-[#C8A064] font-mono">1,500 G</div>
+              <div className="text-xs font-bold text-white mt-1">Capacidad al Vacío</div>
+              <div className="text-[10px] text-slate-400 mt-0.5">Por camión cisterna propio</div>
+            </div>
+
+            <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-lg">
+              <div className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">100%</div>
+              <div className="text-xs font-bold text-white mt-1">Norma G.050</div>
+              <div className="text-[10px] text-slate-400 mt-0.5">Auditorías SUNAFIL aprobadas</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );
