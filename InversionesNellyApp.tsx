@@ -39,6 +39,7 @@ export interface SanitaryModel {
   dailyRate: number;
   description: string;
   badge: string;
+  imageUrl?: string;
   specs: {
     tankCapacity: string;
     dimensions: string;
@@ -83,6 +84,8 @@ export interface HotelRoom {
   checkIn?: string;
   checkOut?: string;
   amenities: string[];
+  imageUrl?: string;
+  gallery?: string[];
 }
 
 export interface HotelBooking {
@@ -243,6 +246,11 @@ const Icons = {
       <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
       <path d="M8 16H3v5" />
     </svg>
+  ),
+  Check: (props: React.SVGProps<SVGSVGElement>) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
   )
 };
 
@@ -369,6 +377,7 @@ const INITIAL_SAN_MODELS: SanitaryModel[] = [
     weeklyRate: 150,
     dailyRate: 65,
     badge: 'Norma G.050 Obligatorio',
+    imageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=800&q=80',
     description: 'Polietileno de alta densidad (HDPE) con protección UV y ventilación cruzada. Diseñado para trabajo rudo en campamentos y obras civiles.',
     specs: {
       tankCapacity: '210 Litros (~450 usos)',
@@ -389,6 +398,7 @@ const INITIAL_SAN_MODELS: SanitaryModel[] = [
     weeklyRate: 220,
     dailyRate: 95,
     badge: 'Confort Superior',
+    imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
     description: 'Cabina ejecutiva con lavamanos interno integrado, activación por bomba de pedal higiénica, espejo, perchero y dosificador de jabón antibacterial.',
     specs: {
       tankCapacity: '230 Litros c/ recirculación',
@@ -409,6 +419,7 @@ const INITIAL_SAN_MODELS: SanitaryModel[] = [
     weeklyRate: 260,
     dailyRate: 110,
     badge: 'Ley 29973 Accesibilidad',
+    imageUrl: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80',
     description: 'Cabina extragrande de nivel cero con rampa de ingreso directo para silla de ruedas, pasamanos de apoyo perimetrales y tanque rebajado.',
     specs: {
       tankCapacity: '180 Litros',
@@ -429,6 +440,7 @@ const INITIAL_SAN_MODELS: SanitaryModel[] = [
     weeklyRate: 130,
     dailyRate: 55,
     badge: 'Bioseguridad DIGESA',
+    imageUrl: 'https://images.unsplash.com/photo-1584772659345-0d04c000f606?auto=format&fit=crop&w=800&q=80',
     description: 'Estación doble de lavado de manos simultáneo. Funciona con bomba de pedal sin conexión a red de agua ni desagüe exterior.',
     specs: {
       tankCapacity: 'Agua limpia 85L | Residual 95L',
@@ -449,6 +461,7 @@ const INITIAL_SAN_MODELS: SanitaryModel[] = [
     weeklyRate: 170,
     dailyRate: 70,
     badge: 'Campamentos Lejanos',
+    imageUrl: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80',
     description: 'Cabina hermética para aseo de personal en turnos rotativos. Piso antideslizante con desagüe perimetral y cortina vinílica de uso pesado.',
     specs: {
       tankCapacity: 'Conexión a red o cisterna externa',
@@ -523,22 +536,22 @@ const INITIAL_CONTRACTS: RentalContract[] = [
 
 const INITIAL_ROOMS: HotelRoom[] = [
   // Piso 1
-  { id: 'r101', roomNumber: '101', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
-  { id: 'r102', roomNumber: '102', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'OCUPADA', currentGuest: 'Ing. Carlos Mendoza (Consorcio Vial)', checkIn: '2026-10-25', checkOut: '2026-11-05', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
-  { id: 'r103', roomNumber: '103', floor: 1, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'DISPONIBLE', amenities: ['Cama Queen', 'Frigobar', 'A/C Frío-Calor', 'Cochera Privada'] },
-  { id: 'r104', roomNumber: '104', floor: 1, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'OCUPADA', currentGuest: 'Supervisores Obra Cosapi (2 pers.)', checkIn: '2026-10-27', checkOut: '2026-11-02', amenities: ['2 Camas 1.5 plazas', 'Casilleros c/ llave', 'Cochera para Camioneta 4x4'] },
+  { id: 'r101', roomNumber: '101', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
+  { id: 'r102', roomNumber: '102', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'OCUPADA', currentGuest: 'Ing. Carlos Mendoza (Consorcio Vial)', checkIn: '2026-10-25', checkOut: '2026-11-05', imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
+  { id: 'r103', roomNumber: '103', floor: 1, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80', amenities: ['Cama Queen', 'Frigobar', 'A/C Frío-Calor', 'Cochera Privada'] },
+  { id: 'r104', roomNumber: '104', floor: 1, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'OCUPADA', currentGuest: 'Supervisores Obra Cosapi (2 pers.)', checkIn: '2026-10-27', checkOut: '2026-11-02', imageUrl: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80', amenities: ['2 Camas 1.5 plazas', 'Casilleros c/ llave', 'Cochera para Camioneta 4x4'] },
 
   // Piso 2
-  { id: 'r201', roomNumber: '201', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'LIMPIEZA_PENDIENTE', amenities: ['Wi-Fi 200Mbps', 'Escritorio de Obra', 'Smart TV'] },
-  { id: 'r202', roomNumber: '202', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente'] },
-  { id: 'r203', roomNumber: '203', floor: 2, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'OCUPADA', currentGuest: 'Lic. Mariana Valdivia (Auditora)', checkIn: '2026-10-28', checkOut: '2026-10-31', amenities: ['Cama Queen', 'Frigobar', 'Balcón'] },
-  { id: 'r204', roomNumber: '204', floor: 2, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'DISPONIBLE', amenities: ['2 Camas 1.5 plazas', 'Wi-Fi Alta Velocidad', 'Cochera'] },
+  { id: 'r201', roomNumber: '201', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'LIMPIEZA_PENDIENTE', imageUrl: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Escritorio de Obra', 'Smart TV'] },
+  { id: 'r202', roomNumber: '202', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente'] },
+  { id: 'r203', roomNumber: '203', floor: 2, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'OCUPADA', currentGuest: 'Lic. Mariana Valdivia (Auditora)', checkIn: '2026-10-28', checkOut: '2026-10-31', imageUrl: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80', amenities: ['Cama Queen', 'Frigobar', 'Balcón'] },
+  { id: 'r204', roomNumber: '204', floor: 2, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80', amenities: ['2 Camas 1.5 plazas', 'Wi-Fi Alta Velocidad', 'Cochera'] },
 
   // Piso 3
-  { id: 'r301', roomNumber: '301', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Smart TV'] },
-  { id: 'r302', roomNumber: '302', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'MANTENIMIENTO', amenities: ['En remodelación de pintura'] },
-  { id: 'r303', roomNumber: '303', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'DISPONIBLE', amenities: ['Cama King', 'Sala de Reuniones de Obra', 'Kitchenette', 'Hidromasaje'] },
-  { id: 'r304', roomNumber: '304', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'OCUPADA', currentGuest: 'Gerencia Minera Chinalco', checkIn: '2026-10-26', checkOut: '2026-11-04', amenities: ['Cama King', 'Sala Ejecutiva', 'Kitchenette'] }
+  { id: 'r301', roomNumber: '301', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Smart TV'] },
+  { id: 'r302', roomNumber: '302', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'MANTENIMIENTO', imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80', amenities: ['En remodelación de pintura'] },
+  { id: 'r303', roomNumber: '303', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'DISPONIBLE', imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80', amenities: ['Cama King', 'Sala de Reuniones de Obra', 'Kitchenette', 'Hidromasaje'] },
+  { id: 'r304', roomNumber: '304', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'OCUPADA', currentGuest: 'Gerencia Minera Chinalco', checkIn: '2026-10-26', checkOut: '2026-11-04', imageUrl: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80', amenities: ['Cama King', 'Sala Ejecutiva', 'Kitchenette'] }
 ];
 
 const INITIAL_INVOICES: Invoice[] = [
@@ -1081,46 +1094,118 @@ export default function InversionesNellyApp() {
 
         {/* ------------------------------------------------------------------ */}
         {/* RUTA 1: HUB CORPORATIVO GENERAL ( / ) */}
+        {/* Portada General + Enfoques Personales de Sanitarios y Hotel */}
         {/* ------------------------------------------------------------------ */}
         {currentRoute === '/' && (
           <div>
-            {/* HERO SPLIT-SCREEN 50 / 50 INTERACTIVO */}
-            <section className="relative min-h-[580px] lg:min-h-[640px] grid grid-cols-1 lg:grid-cols-2">
+            {/* 1. PORTADA GENERAL CORPORATIVA (MASTER HERO) */}
+            <section className="relative bg-[#0F172A] text-white overflow-hidden border-b border-slate-800">
+              <div 
+                className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity scale-105"
+                style={{ backgroundImage: `url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80')` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0F172A]/90 via-[#0F172A]/95 to-[#0F172A]" />
+
+              <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-14 text-center">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-xs font-semibold text-slate-200 mb-6 shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-[#6CBE1A] animate-pulse" />
+                  GRUPO EMPRESARIAL INVERSIONES NELLY S.A.C. • RUC 20608945123
+                </div>
+
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight max-w-5xl mx-auto leading-tight text-white mb-6">
+                  Infraestructura Sanitaria & Hospitalidad Corporativa para <span className="bg-gradient-to-r from-[#6CBE1A] via-[#00A8E8] to-[#C8A064] bg-clip-text text-transparent">Grandes Proyectos en el Perú</span>
+                </h1>
+
+                <p className="text-slate-300 text-sm sm:text-lg max-w-3xl mx-auto leading-relaxed mb-8">
+                  Dos unidades de negocio especializadas trabajando bajo un solo respaldo legal y operativo: dotación y mantenimiento de baños portátiles en frentes de obra bajo la <strong>Norma Técnica G.050</strong>, y descanso ejecutivo para ingenieros y cuadrillas en el <strong>Hotel Nelly</strong> con Facturación SUNAT consolidada.
+                </p>
+
+                {/* Badges de Certificación y Respaldo */}
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-300 mb-10">
+                  <span className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                    <Icons.ShieldCheck className="w-4 h-4 text-[#6CBE1A]" />
+                    Registro DIGESA Res. 2026-4412
+                  </span>
+                  <span className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                    <Icons.Check className="w-4 h-4 text-[#00A8E8]" />
+                    Homologado SUNAFIL Norma G.050
+                  </span>
+                  <span className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                    <Icons.FileText className="w-4 h-4 text-[#C8A064]" />
+                    Facturación Electrónica SUNAT Única
+                  </span>
+                </div>
+
+                {/* Acceso Rápido a las Dos Divisiones */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+                  <button
+                    onClick={() => setCurrentRoute('/sanitarios-portatiles')}
+                    className="p-5 rounded-2xl bg-gradient-to-r from-[#142312] to-[#2E5A07]/80 border border-[#6CBE1A]/40 text-left hover:border-[#6CBE1A] transition shadow-lg group flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="text-[#6CBE1A] font-bold text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        <Icons.Truck className="w-4 h-4" /> División Eco-Sanitarios
+                      </div>
+                      <div className="text-white font-extrabold text-base">Alquiler de Baños & Succión en Obra</div>
+                      <div className="text-slate-300 text-xs mt-1">Cabinas HDPE, camiones cisterna y norma G.050</div>
+                    </div>
+                    <Icons.ChevronRight className="w-5 h-5 text-[#6CBE1A] group-hover:translate-x-1 transition-transform" />
+                  </button>
+
+                  <button
+                    onClick={() => setCurrentRoute('/hotel')}
+                    className="p-5 rounded-2xl bg-gradient-to-r from-[#1B1917] to-[#382E1E]/80 border border-[#C8A064]/40 text-left hover:border-[#C8A064] transition shadow-lg group flex items-center justify-between"
+                  >
+                    <div>
+                      <div className="text-[#E5C388] font-bold text-xs uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        <Icons.Bed className="w-4 h-4" /> División Hotel Nelly
+                      </div>
+                      <div className="text-white font-extrabold text-base">Hospedaje & Estadías de Trabajo</div>
+                      <div className="text-slate-300 text-xs mt-1">Cochera 4x4, desayuno 05:30 AM y tarifa convenio</div>
+                    </div>
+                    <Icons.ChevronRight className="w-5 h-5 text-[#C8A064] group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {/* 2. HERO SPLIT-SCREEN 50 / 50 INTERACTIVO */}
+            <section className="relative min-h-[520px] grid grid-cols-1 lg:grid-cols-2">
               
               {/* Lado Izquierdo: Sanitarios Portátiles (Verde + Azul) */}
-              <div className="relative bg-gradient-to-br from-[#0F172A] via-[#142312] to-[#2E5A07] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-between overflow-hidden group">
+              <div className="relative bg-gradient-to-br from-[#0F172A] via-[#142312] to-[#2E5A07] text-white p-8 sm:p-12 lg:p-14 flex flex-col justify-between overflow-hidden group">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-[#6CBE1A]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#6CBE1A]/20 transition-all duration-700"></div>
                 
                 <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6CBE1A]/20 border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-bold tracking-wide uppercase mb-6">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6CBE1A]/20 border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-bold tracking-wide uppercase mb-4">
                     <Icons.ShieldCheck className="w-4 h-4" />
                     División Saneamiento & Obras Civiles
                   </div>
                   
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white mb-4">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white mb-3">
                     Alquiler y Mantenimiento de <span className="text-[#6CBE1A]">Sanitarios Portátiles</span> en Obra
-                  </h1>
+                  </h2>
                   
-                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 max-w-lg">
+                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 max-w-lg">
                     Soluciones sanitarias homologadas bajo la <strong>Norma Técnica G.050</strong>. Flota propia de camiones hidrosuccionadores al vacío, químicos biodegradables y certificados DIGESA inmediatos.
                   </p>
 
-                  <div className="grid grid-cols-2 gap-3 mb-8 max-w-md">
-                    <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-700/60">
-                      <div className="text-lg font-black text-[#6CBE1A]">24 Horas</div>
-                      <div className="text-xs text-slate-300">Entrega garantizada en sitio</div>
+                  <div className="grid grid-cols-2 gap-3 mb-6 max-w-md">
+                    <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-700/60">
+                      <div className="text-base font-black text-[#6CBE1A]">24 Horas</div>
+                      <div className="text-[11px] text-slate-300">Entrega garantizada en sitio</div>
                     </div>
-                    <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-700/60">
-                      <div className="text-lg font-black text-[#00A8E8]">100% Legal</div>
-                      <div className="text-xs text-slate-300">Certificación DIGESA ambiental</div>
+                    <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-700/60">
+                      <div className="text-base font-black text-[#00A8E8]">100% Legal</div>
+                      <div className="text-[11px] text-slate-300">Certificación DIGESA ambiental</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="relative z-10 pt-4 flex flex-wrap gap-4">
+                <div className="relative z-10 pt-2 flex flex-wrap gap-3">
                   <button
                     onClick={() => setCurrentRoute('/sanitarios-portatiles')}
-                    className="bg-[#6CBE1A] hover:bg-[#5da715] text-slate-950 font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-[#6CBE1A]/30 transition flex items-center gap-2 text-sm"
+                    className="bg-[#6CBE1A] hover:bg-[#5da715] text-slate-950 font-bold px-5 py-3 rounded-xl shadow-lg shadow-[#6CBE1A]/30 transition flex items-center gap-2 text-xs"
                   >
                     <Icons.Truck className="w-4 h-4" />
                     Entrar al Portal de Sanitarios
@@ -1132,7 +1217,7 @@ export default function InversionesNellyApp() {
                         document.getElementById('g050-calculator')?.scrollIntoView({ behavior: 'smooth' });
                       }, 100);
                     }}
-                    className="bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-3.5 rounded-xl border border-white/20 transition flex items-center gap-2 text-sm"
+                    className="bg-white/10 hover:bg-white/20 text-white font-semibold px-4 py-3 rounded-xl border border-white/20 transition flex items-center gap-2 text-xs"
                   >
                     <Icons.Calculator className="w-4 h-4 text-[#6CBE1A]" />
                     Calculadora G.050
@@ -1141,46 +1226,46 @@ export default function InversionesNellyApp() {
               </div>
 
               {/* Lado Derecho: Hotel & Hospitalidad (Dorado + Slate) */}
-              <div className="relative bg-gradient-to-br from-[#0B1322] via-[#1B1917] to-[#382E1E] text-white p-8 sm:p-12 lg:p-16 flex flex-col justify-between overflow-hidden group border-t lg:border-t-0 lg:border-l border-slate-800">
+              <div className="relative bg-gradient-to-br from-[#0B1322] via-[#1B1917] to-[#382E1E] text-white p-8 sm:p-12 lg:p-14 flex flex-col justify-between overflow-hidden group border-t lg:border-t-0 lg:border-l border-slate-800">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-[#C8A064]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#C8A064]/20 transition-all duration-700"></div>
 
                 <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C8A064]/20 border border-[#C8A064]/40 text-[#E5C388] text-xs font-bold tracking-wide uppercase mb-6">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C8A064]/20 border border-[#C8A064]/40 text-[#E5C388] text-xs font-bold tracking-wide uppercase mb-4">
                     <Icons.Bed className="w-4 h-4" />
                     División Hotel & Hospedaje Corporativo
                   </div>
 
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white mb-4">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white mb-3">
                     Hotel Nelly: Descanso Ejecutivo & <span className="text-[#C8A064]">Estadías de Trabajo</span>
                   </h2>
 
-                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 max-w-lg">
+                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 max-w-lg">
                     Confort premium pensado para ingenieros residentes, supervisores de campo y cuadrillas de contratistas. Habitaciones equipadas, cochera privada para camionetas 4x4 y factura SUNAT.
                   </p>
 
-                  <div className="grid grid-cols-2 gap-3 mb-8 max-w-md">
-                    <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-700/60">
-                      <div className="text-lg font-black text-[#C8A064]">Tarifas Obra</div>
-                      <div className="text-xs text-slate-300">25% de ahorro con convenio RUC</div>
+                  <div className="grid grid-cols-2 gap-3 mb-6 max-w-md">
+                    <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-700/60">
+                      <div className="text-base font-black text-[#C8A064]">Tarifas Obra</div>
+                      <div className="text-[11px] text-slate-300">25% de ahorro con convenio RUC</div>
                     </div>
-                    <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-700/60">
-                      <div className="text-lg font-black text-[#E5C388]">Cochera 4x4</div>
-                      <div className="text-xs text-slate-300">Vigilancia privada 24 horas</div>
+                    <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-700/60">
+                      <div className="text-base font-black text-[#E5C388]">Cochera 4x4</div>
+                      <div className="text-[11px] text-slate-300">Vigilancia privada 24 horas</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="relative z-10 pt-4 flex flex-wrap gap-4">
+                <div className="relative z-10 pt-2 flex flex-wrap gap-3">
                   <button
                     onClick={() => setCurrentRoute('/hotel')}
-                    className="bg-[#C8A064] hover:bg-[#b58d52] text-slate-950 font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-[#C8A064]/30 transition flex items-center gap-2 text-sm"
+                    className="bg-[#C8A064] hover:bg-[#b58d52] text-slate-950 font-bold px-5 py-3 rounded-xl shadow-lg shadow-[#C8A064]/30 transition flex items-center gap-2 text-xs"
                   >
                     <Icons.Bed className="w-4 h-4" />
                     Ver Habitaciones & Reservar
                   </button>
                   <button
                     onClick={() => setCurrentRoute('/convenio-constructora')}
-                    className="bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-3.5 rounded-xl border border-white/20 transition flex items-center gap-2 text-sm"
+                    className="bg-white/10 hover:bg-white/20 text-white font-semibold px-4 py-3 rounded-xl border border-white/20 transition flex items-center gap-2 text-xs"
                   >
                     Convenio B2B para Empresas
                   </button>
@@ -1189,7 +1274,7 @@ export default function InversionesNellyApp() {
 
             </section>
 
-            {/* BARRA DE AUTORIDAD Y RESPALDO EMPRESARIAL */}
+            {/* 3. BARRA DE AUTORIDAD Y RESPALDO EMPRESARIAL */}
             <section className="bg-white border-y border-slate-200 py-6 px-4">
               <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 <div className="flex flex-col items-center">
@@ -1211,7 +1296,198 @@ export default function InversionesNellyApp() {
               </div>
             </section>
 
-            {/* BLOQUE ESTRATÉGICO B2B: CONVENIO INTEGRAL CONSTRUCTORA */}
+            {/* 4. ENFOQUE PERSONAL: DIVISIÓN ECO-SANITARIOS PORTÁTILES */}
+            <section className="py-16 px-4 max-w-7xl mx-auto">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <span className="text-xs font-bold text-[#2E5A07] uppercase tracking-wider bg-[#6CBE1A]/20 px-3.5 py-1 rounded-full">
+                  Enfoque Especializado de Saneamiento
+                </span>
+                <h2 className="text-2xl sm:text-4xl font-black text-slate-900 mt-3 leading-tight">
+                  División Eco-Sanitarios: Operatividad Ininterrumpida en Frentes de Trabajo
+                </h2>
+                <p className="text-slate-600 text-sm sm:text-base mt-2">
+                  Equipamiento rotomoldeado resistente al clima extremo y cuadrillas de mantenimiento equipadas con tecnología de succión al vacío.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                {/* Pilar 1 */}
+                <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                  <div className="h-44 w-full overflow-hidden bg-slate-900 relative">
+                    <img 
+                      src="https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=800&q=80" 
+                      alt="Baños de Obra" 
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-3 left-3 bg-[#6CBE1A] text-slate-950 font-black text-[10px] px-2 py-0.5 rounded uppercase">
+                      Norma G.050
+                    </span>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Cabinas HDPE de Alto Tránsito</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                      Fabricadas en polietileno virgen con protección anti-UV. Tanque estanco de 210L con ventilación cruzada que anula olores en ambientes calurosos.
+                    </p>
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#2E5A07]">
+                      <Icons.Check className="w-4 h-4 text-[#6CBE1A]" />
+                      Modelos Estándar, VIP y Accesible
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pilar 2 */}
+                <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                  <div className="h-44 w-full overflow-hidden bg-slate-900 relative">
+                    <img 
+                      src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80" 
+                      alt="Camión Cisterna Succión" 
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-3 left-3 bg-[#00A8E8] text-white font-black text-[10px] px-2 py-0.5 rounded uppercase">
+                      100% Sin Fugas
+                    </span>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Camiones Hidrosuccionadores</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                      Bomba de succión por vacío acoplada a mangueras reforzadas de 2.5 pulgadas. Limpieza profunda con hidro-lavado a presión y reposición química.
+                    </p>
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#00A8E8]">
+                      <Icons.Check className="w-4 h-4 text-[#00A8E8]" />
+                      Rutas programadas de 2 a 6 veces / semana
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pilar 3 */}
+                <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                  <div className="h-44 w-full overflow-hidden bg-slate-900 relative">
+                    <img 
+                      src="https://images.unsplash.com/photo-1584772659345-0d04c000f606?auto=format&fit=crop&w=800&q=80" 
+                      alt="Certificado DIGESA" 
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
+                    />
+                    <span className="absolute top-3 left-3 bg-emerald-600 text-white font-black text-[10px] px-2 py-0.5 rounded uppercase">
+                      Disposición Final
+                    </span>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">Certificación Ambiental DIGESA</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                      Trazabilidad legal completa. Entrega inmediata del Manifiesto de Residuos Sólidos para auditorías de SUNAFIL, OSINERGMIN y OEFA.
+                    </p>
+                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-700">
+                      <Icons.Check className="w-4 h-4 text-emerald-600" />
+                      Descarga en plantas autorizadas SEDAPAL
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <button
+                  onClick={() => setCurrentRoute('/sanitarios-portatiles')}
+                  className="bg-[#2E5A07] hover:bg-[#234505] text-white font-bold px-6 py-3.5 rounded-xl shadow-md transition text-xs flex items-center gap-2"
+                >
+                  <Icons.Truck className="w-4 h-4 text-[#6CBE1A]" />
+                  Ver Catálogo Técnico Completo de Sanitarios
+                </button>
+                <button
+                  onClick={() => {
+                    setCurrentRoute('/sanitarios-portatiles');
+                    setTimeout(() => {
+                      document.getElementById('g050-calculator')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  className="bg-white hover:bg-slate-50 text-slate-800 font-bold px-5 py-3.5 rounded-xl border border-slate-300 transition text-xs flex items-center gap-2"
+                >
+                  <Icons.Calculator className="w-4 h-4 text-[#2E5A07]" />
+                  Calcular Cantidad Requerida por Norma G.050
+                </button>
+              </div>
+            </section>
+
+            {/* 5. ENFOQUE PERSONAL: DIVISIÓN HOTEL NELLY & DESCANSO EJECUTIVO */}
+            <section className="py-16 px-4 bg-slate-900 text-white border-t border-slate-800">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center max-w-3xl mx-auto mb-12">
+                  <span className="text-xs font-bold text-[#E5C388] uppercase tracking-wider bg-[#C8A064]/20 px-3.5 py-1 rounded-full border border-[#C8A064]/30">
+                    Enfoque Especializado de Hospedaje
+                  </span>
+                  <h2 className="text-2xl sm:text-4xl font-black text-white mt-3 leading-tight">
+                    Hotel Nelly: Hospitalidad & Logística para Cuadrillas y Supervisión
+                  </h2>
+                  <p className="text-slate-300 text-sm sm:text-base mt-2">
+                    Instalaciones diseñadas para asegurar el descanso del personal técnico de obra con servicios adaptados a los horarios de construcción.
+                  </p>
+                </div>
+
+                {/* Grid de Habitaciones con Fotografía Real */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+                  {[
+                    { title: 'Simple Ejecutiva', img: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80', price: 'S/ 85', desc: 'Escritorio de trabajo, Wi-Fi 200Mbps, baño privado' },
+                    { title: 'Matrimonial Superior', img: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80', price: 'S/ 115', desc: 'Cama Queen ortopédica, Smart TV 55", aire acondicionado' },
+                    { title: 'Doble Contratistas', img: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80', price: 'S/ 130', desc: '2 camas 1.5 plazas, ideal para parejas de supervisores' },
+                    { title: 'Suite Nelly Presidencial', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80', price: 'S/ 220', desc: 'Cama King, sala privada de coordinación de obra y jacuzzi' }
+                  ].map((h, i) => (
+                    <div key={i} className="bg-slate-800/80 rounded-2xl overflow-hidden border border-slate-700/80 flex flex-col justify-between group">
+                      <div>
+                        <div className="h-44 w-full overflow-hidden bg-slate-950 relative">
+                          <img 
+                            src={h.img} 
+                            alt={h.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <span className="absolute bottom-2 right-2 bg-[#C8A064] text-slate-950 font-black text-xs px-2.5 py-0.5 rounded shadow">
+                            {h.price} / noche
+                          </span>
+                        </div>
+                        <div className="p-4">
+                          <h4 className="font-bold text-white text-base mb-1">{h.title}</h4>
+                          <p className="text-xs text-slate-400">{h.desc}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 4 Ventajas de Contratistas */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                    <div className="text-[#C8A064] font-black text-sm mb-1">Cochera 4x4 Privada</div>
+                    <div className="text-xs text-slate-300">Cámaras 24h para camionetas de obra</div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                    <div className="text-[#C8A064] font-black text-sm mb-1">Desayuno 05:30 AM</div>
+                    <div className="text-xs text-slate-300">Listo para la salida temprana a campo</div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                    <div className="text-[#C8A064] font-black text-sm mb-1">Wi-Fi Fibra 200Mbps</div>
+                    <div className="text-xs text-slate-300">Para planos BIM y videollamadas técnicas</div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                    <div className="text-[#C8A064] font-black text-sm mb-1">Factura SUNAT Única</div>
+                    <div className="text-xs text-slate-300">Convenio a 30 días para consorcios</div>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <button
+                    onClick={() => setCurrentRoute('/hotel')}
+                    className="bg-[#C8A064] hover:bg-[#b58d52] text-slate-950 font-bold px-7 py-3.5 rounded-xl shadow-lg shadow-[#C8A064]/20 transition text-xs inline-flex items-center gap-2"
+                  >
+                    <Icons.Bed className="w-4 h-4" />
+                    Explorar Habitaciones & Reservar Estadía
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {/* 6. BLOQUE ESTRATÉGICO B2B: CONVENIO INTEGRAL CONSTRUCTORA */}
             <section className="py-16 px-4 max-w-7xl mx-auto">
               <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-[#142312] rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
                 <div className="relative z-10 max-w-3xl">
@@ -1686,18 +1962,34 @@ export default function InversionesNellyApp() {
                     className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                   >
                     <div>
+                      {/* Imagen del Modelo Sanitario */}
+                      {model.imageUrl && (
+                        <div className="relative h-48 w-full overflow-hidden bg-slate-900">
+                          <img
+                            src={model.imageUrl}
+                            alt={model.name}
+                            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                          <span className="absolute bottom-2 left-3 font-mono text-[11px] font-bold bg-black/60 text-white px-2 py-0.5 rounded backdrop-blur-sm border border-white/20">
+                            {model.code}
+                          </span>
+                          <span className="absolute top-3 right-3 bg-[#6CBE1A] text-slate-950 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+                            {model.badge}
+                          </span>
+                        </div>
+                      )}
+
                       {/* Cabecera de la Tarjeta */}
                       <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5">
                         <div className="flex justify-between items-start gap-2">
-                          <span className="bg-[#6CBE1A] text-slate-950 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
-                            {model.badge}
-                          </span>
-                          <span className="font-mono text-xs text-slate-300">{model.code}</span>
+                          <span className="text-xs text-slate-400 font-semibold">{model.categoryLabel}</span>
+                          <span className="font-mono text-xs text-[#6CBE1A] font-bold">{model.code}</span>
                         </div>
-                        <h3 className="text-base font-bold text-white mt-2 leading-tight">
+                        <h3 className="text-base font-bold text-white mt-1 leading-tight">
                           {model.name}
                         </h3>
-                        <div className="text-xs text-slate-400 mt-0.5">{model.categoryLabel}</div>
                       </div>
 
                       {/* Tarifas */}
@@ -1911,14 +2203,21 @@ export default function InversionesNellyApp() {
                       }`}
                     >
                       <div>
-                        {/* Cabecera */}
-                        <div className={`p-4 ${isAvailable ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white' : 'bg-slate-300 text-slate-700'}`}>
-                          <div className="flex justify-between items-center">
-                            <span className="font-mono text-xs font-bold bg-white/20 px-2 py-0.5 rounded">
+                        {/* Fotografía Real de la Habitación */}
+                        {room.imageUrl && (
+                          <div className="relative h-48 w-full overflow-hidden bg-slate-900 group">
+                            <img
+                              src={room.imageUrl}
+                              alt={room.typeName}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+                            <span className="absolute bottom-2 left-3 font-mono text-[11px] font-bold bg-black/60 text-white px-2 py-0.5 rounded backdrop-blur-sm border border-white/20">
                               Piso {room.floor} • Hab. {room.roomNumber}
                             </span>
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                              room.status === 'DISPONIBLE' ? 'bg-[#6CBE1A] text-slate-950' :
+                            <span className={`absolute top-3 right-3 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase shadow-md ${
+                              room.status === 'DISPONIBLE' ? 'bg-[#6CBE1A] text-slate-950 font-black' :
                               room.status === 'OCUPADA' ? 'bg-rose-500 text-white' :
                               room.status === 'LIMPIEZA_PENDIENTE' ? 'bg-amber-400 text-slate-950' :
                               'bg-purple-500 text-white'
@@ -1928,8 +2227,20 @@ export default function InversionesNellyApp() {
                                room.status === 'LIMPIEZA_PENDIENTE' ? 'Limpieza' : 'Mantenimiento'}
                             </span>
                           </div>
+                        )}
+
+                        {/* Cabecera */}
+                        <div className={`p-4 ${isAvailable ? 'bg-gradient-to-r from-slate-900 to-slate-800 text-white' : 'bg-slate-300 text-slate-700'}`}>
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs text-[#C8A064] font-semibold">
+                              Alojamiento Corporativo
+                            </span>
+                            <span className="font-mono text-xs text-slate-300">
+                              Hab. {room.roomNumber}
+                            </span>
+                          </div>
                           
-                          <h3 className="text-base font-bold mt-2 leading-tight">
+                          <h3 className="text-base font-bold mt-1 leading-tight">
                             {room.typeName}
                           </h3>
                         </div>

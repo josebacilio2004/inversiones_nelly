@@ -43,6 +43,7 @@ export interface SanitaryModel {
   dailyRate: number;
   description: string;
   badge: string;
+  imageUrl?: string;
   specs: {
     tankCapacity: string;
     dimensions: string;
@@ -87,6 +88,8 @@ export interface HotelRoom {
   checkIn?: string;
   checkOut?: string;
   amenities: string[];
+  imageUrl?: string;
+  gallery?: string[];
 }
 
 export interface HotelBooking {

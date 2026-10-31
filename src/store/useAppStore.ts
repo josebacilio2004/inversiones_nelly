@@ -89,20 +89,179 @@ const INITIAL_CONTRACTS: RentalContract[] = [
 ];
 
 const INITIAL_ROOMS: HotelRoom[] = [
-  { id: 'r101', roomNumber: '101', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] },
-  { id: 'r102', roomNumber: '102', floor: 1, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'OCUPADA', currentGuest: 'Ing. Carlos Mendoza (Consorcio Vial)', checkIn: '2026-10-25', checkOut: '2026-11-05', amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Smart TV'] },
-  { id: 'r103', roomNumber: '103', floor: 1, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'DISPONIBLE', amenities: ['Cama Queen', 'Frigobar', 'A/C', 'Cochera Privada 4x4'] },
-  { id: 'r104', roomNumber: '104', floor: 1, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'OCUPADA', currentGuest: 'Supervisores Obra Cosapi (2 pers.)', checkIn: '2026-10-27', checkOut: '2026-11-02', amenities: ['2 Camas 1.5 plazas', 'Casilleros c/ llave'] },
+  { 
+    id: 'r101', 
+    roomNumber: '101', 
+    floor: 1, 
+    type: 'SIMPLE_EJECUTIVA', 
+    typeName: 'Simple Ejecutiva', 
+    basePrice: 110, 
+    corporatePrice: 85, 
+    status: 'DISPONIBLE', 
+    imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80'
+    ],
+    amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Agua Caliente 24h', 'Smart TV 43"'] 
+  },
+  { 
+    id: 'r102', 
+    roomNumber: '102', 
+    floor: 1, 
+    type: 'SIMPLE_EJECUTIVA', 
+    typeName: 'Simple Ejecutiva', 
+    basePrice: 110, 
+    corporatePrice: 85, 
+    status: 'OCUPADA', 
+    currentGuest: 'Ing. Carlos Mendoza (Consorcio Vial)', 
+    checkIn: '2026-10-25', 
+    checkOut: '2026-11-05', 
+    imageUrl: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80',
+    amenities: ['Wi-Fi 200Mbps', 'Baño Privado', 'Smart TV'] 
+  },
+  { 
+    id: 'r103', 
+    roomNumber: '103', 
+    floor: 1, 
+    type: 'MATRIMONIAL', 
+    typeName: 'Matrimonial Superior', 
+    basePrice: 160, 
+    corporatePrice: 125, 
+    status: 'DISPONIBLE', 
+    imageUrl: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80'
+    ],
+    amenities: ['Cama Queen', 'Frigobar', 'A/C Frío-Calor', 'Cochera Privada 4x4'] 
+  },
+  { 
+    id: 'r104', 
+    roomNumber: '104', 
+    floor: 1, 
+    type: 'DOBLE_CORPORATIVA', 
+    typeName: 'Doble para Contratistas', 
+    basePrice: 190, 
+    corporatePrice: 145, 
+    status: 'OCUPADA', 
+    currentGuest: 'Supervisores Obra Cosapi (2 pers.)', 
+    checkIn: '2026-10-27', 
+    checkOut: '2026-11-02', 
+    imageUrl: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80',
+    amenities: ['2 Camas 1.5 plazas', 'Casilleros c/ llave'] 
+  },
 
-  { id: 'r201', roomNumber: '201', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'LIMPIEZA_PENDIENTE', amenities: ['Wi-Fi 200Mbps', 'Escritorio de Obra'] },
-  { id: 'r202', roomNumber: '202', floor: 2, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', amenities: ['Wi-Fi 200Mbps', 'Baño Privado'] },
-  { id: 'r203', roomNumber: '203', floor: 2, type: 'MATRIMONIAL', typeName: 'Matrimonial Superior', basePrice: 160, corporatePrice: 125, status: 'OCUPADA', currentGuest: 'Lic. Mariana Valdivia (Auditora)', checkIn: '2026-10-28', checkOut: '2026-10-31', amenities: ['Cama Queen', 'Frigobar'] },
-  { id: 'r204', roomNumber: '204', floor: 2, type: 'DOBLE_CORPORATIVA', typeName: 'Doble para Contratistas', basePrice: 190, corporatePrice: 145, status: 'DISPONIBLE', amenities: ['2 Camas 1.5 plazas', 'Wi-Fi 200Mbps'] },
+  { 
+    id: 'r201', 
+    roomNumber: '201', 
+    floor: 2, 
+    type: 'SIMPLE_EJECUTIVA', 
+    typeName: 'Simple Ejecutiva', 
+    basePrice: 110, 
+    corporatePrice: 85, 
+    status: 'LIMPIEZA_PENDIENTE', 
+    imageUrl: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80',
+    amenities: ['Wi-Fi 200Mbps', 'Escritorio de Obra'] 
+  },
+  { 
+    id: 'r202', 
+    roomNumber: '202', 
+    floor: 2, 
+    type: 'SIMPLE_EJECUTIVA', 
+    typeName: 'Simple Ejecutiva', 
+    basePrice: 110, 
+    corporatePrice: 85, 
+    status: 'DISPONIBLE', 
+    imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80',
+    amenities: ['Wi-Fi 200Mbps', 'Baño Privado'] 
+  },
+  { 
+    id: 'r203', 
+    roomNumber: '203', 
+    floor: 2, 
+    type: 'MATRIMONIAL', 
+    typeName: 'Matrimonial Superior', 
+    basePrice: 160, 
+    corporatePrice: 125, 
+    status: 'OCUPADA', 
+    currentGuest: 'Lic. Mariana Valdivia (Auditora)', 
+    checkIn: '2026-10-28', 
+    checkOut: '2026-10-31', 
+    imageUrl: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80',
+    amenities: ['Cama Queen', 'Frigobar'] 
+  },
+  { 
+    id: 'r204', 
+    roomNumber: '204', 
+    floor: 2, 
+    type: 'DOBLE_CORPORATIVA', 
+    typeName: 'Doble para Contratistas', 
+    basePrice: 190, 
+    corporatePrice: 145, 
+    status: 'DISPONIBLE', 
+    imageUrl: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=800&q=80'
+    ],
+    amenities: ['2 Camas 1.5 plazas', 'Wi-Fi 200Mbps', 'Cochera Techada 4x4'] 
+  },
 
-  { id: 'r301', roomNumber: '301', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'DISPONIBLE', amenities: ['Wi-Fi 200Mbps', 'Baño Privado'] },
-  { id: 'r302', roomNumber: '302', floor: 3, type: 'SIMPLE_EJECUTIVA', typeName: 'Simple Ejecutiva', basePrice: 110, corporatePrice: 85, status: 'MANTENIMIENTO', amenities: ['En remodelación de pintura'] },
-  { id: 'r303', roomNumber: '303', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'DISPONIBLE', amenities: ['Cama King', 'Sala de Reuniones de Obra', 'Kitchenette'] },
-  { id: 'r304', roomNumber: '304', floor: 3, type: 'SUITE_NELLY', typeName: 'Suite Nelly Presidencial', basePrice: 280, corporatePrice: 220, status: 'OCUPADA', currentGuest: 'Gerencia Minera Chinalco', checkIn: '2026-10-26', checkOut: '2026-11-04', amenities: ['Cama King', 'Sala Ejecutiva'] },
+  { 
+    id: 'r301', 
+    roomNumber: '301', 
+    floor: 3, 
+    type: 'SIMPLE_EJECUTIVA', 
+    typeName: 'Simple Ejecutiva', 
+    basePrice: 110, 
+    corporatePrice: 85, 
+    status: 'DISPONIBLE', 
+    imageUrl: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80',
+    amenities: ['Wi-Fi 200Mbps', 'Baño Privado'] 
+  },
+  { 
+    id: 'r302', 
+    roomNumber: '302', 
+    floor: 3, 
+    type: 'SIMPLE_EJECUTIVA', 
+    typeName: 'Simple Ejecutiva', 
+    basePrice: 110, 
+    corporatePrice: 85, 
+    status: 'MANTENIMIENTO', 
+    imageUrl: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80',
+    amenities: ['En remodelación de pintura'] 
+  },
+  { 
+    id: 'r303', 
+    roomNumber: '303', 
+    floor: 3, 
+    type: 'SUITE_NELLY', 
+    typeName: 'Suite Nelly Presidencial', 
+    basePrice: 280, 
+    corporatePrice: 220, 
+    status: 'DISPONIBLE', 
+    imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80',
+    gallery: [
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80'
+    ],
+    amenities: ['Cama King', 'Sala de Reuniones de Obra', 'Kitchenette'] 
+  },
+  { 
+    id: 'r304', 
+    roomNumber: '304', 
+    floor: 3, 
+    type: 'SUITE_NELLY', 
+    typeName: 'Suite Nelly Presidencial', 
+    basePrice: 280, 
+    corporatePrice: 220, 
+    status: 'OCUPADA', 
+    currentGuest: 'Gerencia Minera Chinalco', 
+    checkIn: '2026-10-26', 
+    checkOut: '2026-11-04', 
+    imageUrl: 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80',
+    amenities: ['Cama King', 'Sala Ejecutiva'] 
+  },
 ];
 
 const INITIAL_INVOICES: Invoice[] = [

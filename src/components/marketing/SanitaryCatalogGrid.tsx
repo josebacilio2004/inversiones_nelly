@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Icons } from '@/components/ui/Icons';
 import { useAppStore } from '@/store/useAppStore';
 import type { SanitaryModel } from '@/types';
@@ -16,6 +17,7 @@ const CATALOG_MODELS: SanitaryModel[] = [
     weeklyRate: 150,
     dailyRate: 65,
     badge: 'Norma G.050 Obligatorio',
+    imageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?auto=format&fit=crop&w=800&q=80',
     description: 'Polietileno virgen de alta densidad (HDPE) con protección UV y ventilación cruzada. Diseñado para trabajo rudo en campamentos y obras civiles.',
     specs: {
       tankCapacity: '210 Litros (~450 usos)',
@@ -36,6 +38,7 @@ const CATALOG_MODELS: SanitaryModel[] = [
     weeklyRate: 220,
     dailyRate: 95,
     badge: 'Confort Superior',
+    imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
     description: 'Cabina ejecutiva con lavamanos interno integrado, activación por bomba de pedal higiénica, espejo, perchero y dosificador de jabón antibacterial.',
     specs: {
       tankCapacity: '230 Litros c/ recirculación',
@@ -56,6 +59,7 @@ const CATALOG_MODELS: SanitaryModel[] = [
     weeklyRate: 260,
     dailyRate: 110,
     badge: 'Ley 29973 Accesibilidad',
+    imageUrl: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=800&q=80',
     description: 'Cabina extragrande de nivel cero con rampa de ingreso directo para silla de ruedas, pasamanos de apoyo perimetrales y tanque rebajado.',
     specs: {
       tankCapacity: '180 Litros',
@@ -76,6 +80,7 @@ const CATALOG_MODELS: SanitaryModel[] = [
     weeklyRate: 130,
     dailyRate: 55,
     badge: 'Bioseguridad DIGESA',
+    imageUrl: 'https://images.unsplash.com/photo-1584772659345-0d04c000f606?auto=format&fit=crop&w=800&q=80',
     description: 'Estación doble de lavado de manos simultáneo. Funciona con bomba de pedal sin conexión a red de agua ni desagüe exterior.',
     specs: {
       tankCapacity: 'Agua limpia 85L | Residual 95L',
@@ -96,6 +101,7 @@ const CATALOG_MODELS: SanitaryModel[] = [
     weeklyRate: 170,
     dailyRate: 70,
     badge: 'Campamentos Lejanos',
+    imageUrl: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80',
     description: 'Cabina hermética para aseo de personal en turnos rotativos. Piso antideslizante con desagüe perimetral y cortina vinílica de uso pesado.',
     specs: {
       tankCapacity: 'Conexión a red o cisterna externa',
@@ -113,26 +119,43 @@ export const SanitaryCatalogGrid: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {CATALOG_MODELS.map((model) => (
-        <div
+      {CATALOG_MODELS.map((model, idx) => (
+        <motion.div
           key={model.id}
-          className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: idx * 0.1 }}
+          whileHover={{ y: -6 }}
+          className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between"
         >
           <div>
-            <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5">
-              <div className="flex justify-between items-start gap-2">
-                <span className="bg-[#6CBE1A] text-slate-950 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
+            {/* Imagen del Modelo con Overlay */}
+            <div className="relative h-44 w-full overflow-hidden bg-slate-900 group">
+              <img
+                src={model.imageUrl}
+                alt={model.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent" />
+              
+              <div className="absolute top-3 left-3 flex items-center gap-2">
+                <span className="bg-[#6CBE1A] text-slate-950 text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider shadow-sm">
                   {model.badge}
                 </span>
-                <span className="font-mono text-xs text-slate-300">{model.code}</span>
               </div>
-              <h3 className="text-base font-bold text-white mt-2 leading-tight">
-                {model.name}
-              </h3>
-              <div className="text-xs text-slate-400 mt-0.5">{model.categoryLabel}</div>
+              <span className="absolute top-3 right-3 font-mono text-xs text-white/90 bg-black/60 px-2 py-0.5 rounded backdrop-blur-md">
+                {model.code}
+              </span>
+
+              <div className="absolute bottom-3 left-3 right-3 text-white">
+                <h3 className="text-sm font-bold leading-tight">{model.name}</h3>
+                <div className="text-[11px] text-emerald-300 mt-0.5">{model.categoryLabel}</div>
+              </div>
             </div>
 
-            <div className="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+            {/* Tarifas */}
+            <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
               <div>
                 <div className="text-[10px] text-slate-500 font-bold uppercase">Tarifa Mensual</div>
                 <div className="text-xl font-black text-[#2E5A07]">
@@ -145,12 +168,13 @@ export const SanitaryCatalogGrid: React.FC = () => {
               </div>
             </div>
 
-            <div className="p-5 space-y-2.5 text-xs">
-              <p className="text-slate-600 text-xs leading-relaxed mb-3">
+            {/* Especificaciones Técnicas */}
+            <div className="p-4 space-y-2.5 text-xs">
+              <p className="text-slate-600 text-xs leading-relaxed line-clamp-2">
                 {model.description}
               </p>
 
-              <div className="bg-slate-50 rounded-xl p-3 space-y-1.5 border border-slate-100">
+              <div className="bg-slate-50 rounded-xl p-3 space-y-1.5 border border-slate-100 text-[11px]">
                 <div className="flex justify-between text-slate-600">
                   <span className="text-slate-500">Capacidad Tanque:</span>
                   <span className="font-bold text-slate-800">{model.specs.tankCapacity}</span>
@@ -171,19 +195,20 @@ export const SanitaryCatalogGrid: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-5 pt-0">
+          {/* Botón de Selección Rápida */}
+          <div className="p-4 pt-0">
             <button
               onClick={() => {
                 showToast('Modelo Seleccionado', `${model.name} cargado en el formulario`, 'info');
                 document.getElementById('sticky-quote-form')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="w-full bg-[#2E5A07] hover:bg-[#234505] text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2"
+              className="w-full bg-[#2E5A07] hover:bg-[#234505] text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-sm"
             >
               <Icons.CheckCircle className="w-4 h-4 text-[#6CBE1A]" />
               Seleccionar para Cotizar
             </button>
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
