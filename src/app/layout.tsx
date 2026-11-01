@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { ToastContainer } from '@/components/ui/Toast';
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 
 export const metadata: Metadata = {
   title: 'Inversiones Nelly S.A.C. | Eco-Sanitarios Portátiles & Hotel Ejecutivo',
@@ -15,7 +17,6 @@ export const metadata: Metadata = {
     'inversiones nelly',
   ],
   authors: [{ name: 'Inversiones Nelly S.A.C.' }],
-  viewport: 'width=device-width, initial-scale=1',
 };
 
 export default function RootLayout({
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="es" className="scroll-smooth" suppressHydrationWarning>
       <body className="antialiased selection:bg-[#6CBE1A] selection:text-white" suppressHydrationWarning>
         <ToastContainer />
+        <WhatsAppButton />
         {children}
       </body>
     </html>

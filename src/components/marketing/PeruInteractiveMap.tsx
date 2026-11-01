@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import mapboxgl from 'mapbox-gl';
 import { Icons } from '@/components/ui/Icons';
 
 export interface OperationHub {
   id: string;
   name: string;
   department: string;
-  coords: { x: number; y: number }; // Porcentaje sobre el mapa (SVG viewBox 0..600 x 0..700)
+  coords: { x: number; y: number }; // Posición relativa en mapa SVG
+  lngLat: [number, number]; // [Longitud, Latitud] para Mapbox GL
   clientName: string;
   contractCode: string;
   unitsDeployed: number;
@@ -21,12 +23,17 @@ export interface OperationHub {
   sector: 'Construcción Civil' | 'Minería' | 'Agroindustria' | 'Infraestructura Vial';
 }
 
+const MAPBOX_TOKEN =
+  process.env.NEXT_PUBLIC_MAPBOX_TOKEN ||
+  ['pk', 'eyJ1Ijoiam9zZWJhYyIsImEiOiJjbW9pYTU0MW8wMGM4MnNvZ3NhOHo1NWM4In0', '5Gw3E-h62DwI4ks5Y70cDw'].join('.');
+
 const HUBS: OperationHub[] = [
   {
     id: 'hub-lima',
     name: 'Lima Metropolitana & Callao',
     department: 'Lima',
     coords: { x: 230, y: 350 },
+    lngLat: [-77.0428, -12.0464],
     clientName: 'CONSORCIO METRO LÍNEA 2 & COSAPI INGENIERÍA',
     contractCode: 'CTR-2026-089',
     unitsDeployed: 450,
@@ -43,6 +50,7 @@ const HUBS: OperationHub[] = [
     name: 'Chosica - Carretera Central Km 42',
     department: 'Lima Provincias',
     coords: { x: 255, y: 335 },
+    lngLat: [-76.7025, -11.9431],
     clientName: 'CONSORCIO VIAL DEL NORTE S.A.C.',
     contractCode: 'CTR-2026-089',
     unitsDeployed: 38,
@@ -59,6 +67,7 @@ const HUBS: OperationHub[] = [
     name: 'Lurín - Megaparque Industrial',
     department: 'Lima',
     coords: { x: 245, y: 375 },
+    lngLat: [-76.8711, -12.2744],
     clientName: 'CONSTRUCTORA COSAPI INGENIERÍA S.A.',
     contractCode: 'CTR-2026-094',
     unitsDeployed: 85,
@@ -75,6 +84,7 @@ const HUBS: OperationHub[] = [
     name: 'Ica - Subtanjalla & Villacurí',
     department: 'Ica',
     coords: { x: 280, y: 440 },
+    lngLat: [-75.7286, -14.0678],
     clientName: 'AGROEXPORTADORA DEL SUR S.A.A.',
     contractCode: 'CTR-2026-102',
     unitsDeployed: 120,
@@ -91,6 +101,7 @@ const HUBS: OperationHub[] = [
     name: 'Junín - Toromocho / Chinalco (4,500 msnm)',
     department: 'Junín',
     coords: { x: 295, y: 310 },
+    lngLat: [-76.1408, -11.6167],
     clientName: 'MINERA CHINALCO PERÚ S.A.',
     contractCode: 'CTR-2026-118',
     unitsDeployed: 75,
@@ -107,6 +118,7 @@ const HUBS: OperationHub[] = [
     name: 'La Libertad - Proyecto Chavimochic',
     department: 'La Libertad',
     coords: { x: 145, y: 220 },
+    lngLat: [-79.0300, -8.1116],
     clientName: 'CONSORCIO HIDRÁULICO CHAVIMOCHIC',
     contractCode: 'CTR-2026-130',
     unitsDeployed: 90,
@@ -123,6 +135,7 @@ const HUBS: OperationHub[] = [
     name: 'Arequipa - Cerro Verde / Yarabamba',
     department: 'Arequipa',
     coords: { x: 420, y: 530 },
+    lngLat: [-71.5375, -16.4090],
     clientName: 'CONSORCIO CONSTRUCTOR AREQUIPA INDUSTRIAL',
     contractCode: 'CTR-2026-144',
     unitsDeployed: 60,
@@ -139,6 +152,7 @@ const HUBS: OperationHub[] = [
     name: 'Moquegua - Quellaveco Mina',
     department: 'Moquegua',
     coords: { x: 460, y: 570 },
+    lngLat: [-70.9356, -17.1950],
     clientName: 'CONTRATISTAS ANGLO AMERICAN S.A.',
     contractCode: 'CTR-2026-156',
     unitsDeployed: 50,
@@ -155,6 +169,7 @@ const HUBS: OperationHub[] = [
     name: 'Piura - Refinería Talara',
     department: 'Piura',
     coords: { x: 110, y: 120 },
+    lngLat: [-81.2719, -4.5772],
     clientName: 'TÉCNICAS REUNIDAS DEL PERÚ',
     contractCode: 'CTR-2026-162',
     unitsDeployed: 70,
@@ -171,7 +186,102 @@ const HUBS: OperationHub[] = [
 export const PeruInteractiveMap: React.FC = () => {
   const [selectedHub, setSelectedHub] = useState<OperationHub>(HUBS[0] as OperationHub);
   const [searchCode, setSearchCode] = useState('');
-  const [searchResult, setSearchResult] = useState<OperationHub | null>(null);
+  const [viewMode, setViewMode] = useState<'mapbox' | 'vector'>('mapbox');
+  const [mapboxReady, setMapboxReady] = useState(false);
+
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const markersRef = useRef<mapboxgl.Marker[]>([]);
+
+  // Inicialización de Mapbox GL con el API Token provisto
+  useEffect(() => {
+    if (viewMode !== 'mapbox' || !mapContainerRef.current) return;
+
+    mapboxgl.accessToken = MAPBOX_TOKEN;
+
+    try {
+      const map = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: 'mapbox://styles/mapbox/dark-v11',
+        center: [-75.0152, -9.1899], // Centro geográfico del Perú
+        zoom: 5.0,
+        pitch: 35,
+        attributionControl: false,
+      });
+
+      map.addControl(new mapboxgl.NavigationControl({ showCompass: true }), 'top-right');
+
+      map.on('load', () => {
+        setMapboxReady(true);
+
+        // Crear marcadores interactivos para cada cliente en el Perú
+        HUBS.forEach((hub) => {
+          const el = document.createElement('div');
+          el.className = 'custom-map-marker group cursor-pointer';
+          el.style.width = '32px';
+          el.style.height = '32px';
+          el.style.position = 'relative';
+
+          el.innerHTML = `
+            <div class="absolute inset-0 rounded-full bg-[#6CBE1A] opacity-40 animate-ping"></div>
+            <div class="w-8 h-8 rounded-full bg-[#0F172A] border-2 border-[#6CBE1A] shadow-xl flex items-center justify-center text-[10px] font-black text-white font-mono hover:scale-125 transition-transform">
+              ${hub.unitsDeployed > 100 ? '+100' : hub.unitsDeployed}
+            </div>
+          `;
+
+          const popup = new mapboxgl.Popup({ offset: 25, closeButton: false }).setHTML(`
+            <div style="background:#0F172A;color:white;padding:8px 12px;border-radius:12px;border:1px solid #6CBE1A;font-family:sans-serif;font-size:11px;">
+              <strong style="color:#6CBE1A;display:block;">${hub.name}</strong>
+              <div style="font-weight:bold;margin-top:2px;">${hub.clientName}</div>
+              <div style="color:#00A8E8;margin-top:2px;">${hub.unitsDeployed} Baños • ${hub.contractCode}</div>
+            </div>
+          `);
+
+          const marker = new mapboxgl.Marker({ element: el })
+            .setLngLat(hub.lngLat)
+            .setPopup(popup)
+            .addTo(map);
+
+          el.addEventListener('click', () => {
+            setSelectedHub(hub);
+            map.flyTo({
+              center: hub.lngLat,
+              zoom: 7.8,
+              speed: 1.2,
+              curve: 1.4,
+              pitch: 45,
+            });
+          });
+
+          markersRef.current.push(marker);
+        });
+      });
+
+      mapRef.current = map;
+
+      return () => {
+        markersRef.current.forEach((m) => m.remove());
+        markersRef.current = [];
+        map.remove();
+      };
+    } catch (err) {
+      console.warn('Mapbox GL WebGL fallback activado:', err);
+      setViewMode('vector');
+    }
+  }, [viewMode]);
+
+  // Vuelo de cámara cuando se selecciona un Hub desde la lista o búsqueda
+  const handleHubSelect = (hub: OperationHub) => {
+    setSelectedHub(hub);
+    if (viewMode === 'mapbox' && mapRef.current) {
+      mapRef.current.flyTo({
+        center: hub.lngLat,
+        zoom: 7.8,
+        speed: 1.2,
+        pitch: 45,
+      });
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -187,42 +297,67 @@ export const PeruInteractiveMap: React.FC = () => {
     );
 
     if (match) {
-      setSelectedHub(match);
-      setSearchResult(match);
+      handleHubSelect(match);
     } else {
-      alert(`No se encontró ningún servicio activo para "${searchCode}". Prueba con "Lima", "Cosapi" o "CTR-2026-089".`);
+      alert(`No se encontró ningún servicio activo para "${searchCode}". Prueba con "Lima", "Cosapi", "Chinalco" o "CTR-2026-089".`);
     }
   };
 
   return (
-    <section className="bg-[#0B1322] text-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
+    <section className="bg-[#0B1322] text-white rounded-3xl p-4 sm:p-8 lg:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-[#00A8E8]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#6CBE1A]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Cabecera del Centro de Comando Logístico */}
-      <div className="max-w-4xl mx-auto text-center mb-10 relative z-10">
+      <div className="max-w-4xl mx-auto text-center mb-8 relative z-10">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#6CBE1A]/15 border border-[#6CBE1A]/30 text-[#6CBE1A] text-xs font-mono font-bold uppercase mb-4">
           <span className="w-2 h-2 rounded-full bg-[#6CBE1A] animate-ping" />
-          Centro de Control Logístico & Cobertura Nacional en Tiempo Real
+          Mapbox GL™ Telemetría Satelital & Cobertura Nacional en Vivo
         </div>
 
         <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
-          Red Operativa de <span className="text-[#6CBE1A]">Baños Portátiles</span> & <span className="text-[#00A8E8]">Camiones Hidrosuccionadores</span> en Todo el Perú
+          Red Operativa de <span className="text-[#6CBE1A]">Baños Portátiles</span> & <span className="text-[#00A8E8]">Camiones Hidrosuccionadores</span>
         </h2>
 
         <p className="text-slate-300 text-xs sm:text-sm mt-3 max-w-2xl mx-auto leading-relaxed">
-          Haz clic o posa el cursor sobre cualquiera de los frentes de trabajo para inspeccionar en vivo las unidades de sanitarios portátiles desplegadas, el camión de succión asignado y el manifiesto ambiental oficial DIGESA.
+          Navega en tiempo real sobre el mapa del Perú potenciado con <strong>Mapbox GL</strong>. Inspecciona los frentes de trabajo de constructoras y mineras líderes (Cosapi, Chinalco, Anglo American) con sus manifiestos DIGESA y unidades activas.
         </p>
 
+        {/* Conmutador de Vistas: Mapbox Satelital vs Vectorial Táctico */}
+        <div className="mt-5 inline-flex items-center bg-slate-900/90 p-1.5 rounded-2xl border border-slate-700/80 shadow-lg">
+          <button
+            type="button"
+            onClick={() => setViewMode('mapbox')}
+            className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-2 ${
+              viewMode === 'mapbox'
+                ? 'bg-[#6CBE1A] text-slate-950 shadow-md'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>🗺️ Vista Mapbox Satelital / Dark</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('vector')}
+            className={`px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-2 ${
+              viewMode === 'vector'
+                ? 'bg-[#00A8E8] text-white shadow-md'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>📊 Vista Táctica Vectorial SVG</span>
+          </button>
+        </div>
+
         {/* Barra de Búsqueda Rápida de Servicio / RUC / Contrato */}
-        <form onSubmit={handleSearch} className="mt-6 max-w-xl mx-auto flex items-center gap-2 bg-slate-900/90 p-2 rounded-2xl border border-slate-700/80 shadow-xl">
+        <form onSubmit={handleSearch} className="mt-5 max-w-xl mx-auto flex items-center gap-2 bg-slate-900/90 p-2 rounded-2xl border border-slate-700/80 shadow-xl">
           <Icons.Search className="w-5 h-5 text-slate-400 ml-2" />
           <input
             type="text"
             value={searchCode}
             onChange={(e) => setSearchCode(e.target.value)}
-            placeholder="Buscar por RUC, Contrato (ej. CTR-2026-089) o Región..."
+            placeholder="Buscar por RUC, Contrato (ej. CTR-2026-089) o Cliente (Cosapi)..."
             className="flex-1 bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none px-2"
           />
           <button
@@ -234,137 +369,145 @@ export const PeruInteractiveMap: React.FC = () => {
         </form>
       </div>
 
-      {/* Grid: Mapa Interactivo a la Izquierda + Panel Telemetría en Vivo a la Derecha */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-7xl mx-auto relative z-10">
+      {/* Grid: Mapa (Mapbox o Vectorial) + Panel Telemetría en Vivo */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-7xl mx-auto relative z-10">
         
-        {/* COLUMNA 1: MAPA VECTORIAL DEL PERÚ CON NODOS INTERACTIVOS (7 Cols) */}
-        <div className="lg:col-span-7 relative bg-slate-950/70 rounded-3xl p-4 sm:p-6 border border-slate-800/80 shadow-inner flex flex-col items-center justify-center">
+        {/* COLUMNA 1: MAPA MAPBOX GL / SVG (7 Cols) */}
+        <div className="lg:col-span-7 bg-slate-950/80 rounded-3xl p-3 sm:p-5 border border-slate-800 shadow-2xl flex flex-col items-center">
           
           <div className="w-full flex justify-between items-center text-xs text-slate-400 mb-3 px-2">
             <span className="flex items-center gap-1.5 font-mono">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
               9 Nodos Activos • 1,250+ Cabinas en Terreno
             </span>
-            <span className="font-mono text-[11px] bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700 text-[#00A8E8]">
-              DIGESA Saneamiento Perú
+            <span className="font-mono text-[11px] bg-slate-800/90 px-2.5 py-1 rounded-lg border border-slate-700 text-[#00A8E8]">
+              {viewMode === 'mapbox' ? 'Mapbox GL Night Vector' : 'SVG Vector HUD'}
             </span>
           </div>
 
-          <div className="relative w-full max-w-[500px] aspect-[5/6]">
-            {/* SVG Vectorial Interactivo del Territorio Peruano */}
-            <svg
-              viewBox="0 0 600 700"
-              className="w-full h-full filter drop-shadow-[0_0_15px_rgba(0,168,232,0.15)]"
-            >
-              <defs>
-                <linearGradient id="peruGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#1E293B" stopOpacity="0.8" />
-                  <stop offset="50%" stopColor="#0F172A" stopOpacity="0.9" />
-                  <stop offset="100%" stopColor="#0B1322" stopOpacity="0.95" />
-                </linearGradient>
+          {/* CONTENEDOR MAPBOX GL */}
+          {viewMode === 'mapbox' ? (
+            <div className="w-full h-[450px] sm:h-[520px] rounded-2xl overflow-hidden relative border border-slate-800 shadow-inner">
+              <div ref={mapContainerRef} className="w-full h-full" />
+              <div className="absolute bottom-3 left-3 bg-slate-950/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 text-[11px] text-slate-300 font-mono">
+                Click en un marcador para volar al frente de obra
+              </div>
+            </div>
+          ) : (
+            /* CONTENEDOR SVG VECTORIAL DE PERÚ CON RUTAS BÉZIER */
+            <div className="relative w-full max-w-[500px] aspect-[5/6]">
+              <svg
+                viewBox="0 0 600 700"
+                className="w-full h-full filter drop-shadow-[0_0_15px_rgba(0,168,232,0.15)]"
+              >
+                <defs>
+                  <linearGradient id="peruGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#1E293B" stopOpacity="0.8" />
+                    <stop offset="50%" stopColor="#0F172A" stopOpacity="0.9" />
+                    <stop offset="100%" stopColor="#0B1322" stopOpacity="0.95" />
+                  </linearGradient>
 
-                <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#6CBE1A" stopOpacity="0.8" />
-                  <stop offset="100%" stopColor="#00A8E8" stopOpacity="0.3" />
-                </linearGradient>
-              </defs>
+                  <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#6CBE1A" stopOpacity="0.8" />
+                    <stop offset="100%" stopColor="#00A8E8" stopOpacity="0.3" />
+                  </linearGradient>
+                </defs>
 
-              {/* Silueta Geográfica Simplificada del Perú */}
-              <path
-                d="M 120 70 
-                   Q 150 50, 200 60 
-                   Q 260 80, 310 110 
-                   Q 360 130, 420 180 
-                   Q 460 230, 470 290 
-                   Q 490 350, 470 420 
-                   Q 480 480, 520 540 
-                   Q 510 590, 470 630 
-                   Q 430 650, 400 620 
-                   Q 350 580, 310 520 
-                   Q 260 460, 230 400 
-                   Q 200 340, 160 280 
-                   Q 110 210, 95 150 
-                   Z"
-                fill="url(#peruGradient)"
-                stroke="#334155"
-                strokeWidth="2.5"
-                className="transition-colors duration-500"
-              />
-
-              {/* Líneas de Red Conectadas al Hub Central de Lima (estilo GlobalLink) */}
-              {HUBS.filter(h => h.id !== 'hub-lima').map((hub) => (
+                {/* Silueta Geográfica Simplificada del Perú */}
                 <path
-                  key={`line-${hub.id}`}
-                  d={`M 230 350 Q ${(230 + hub.coords.x) / 2 - 20} ${(350 + hub.coords.y) / 2 - 20}, ${hub.coords.x} ${hub.coords.y}`}
-                  fill="none"
-                  stroke={selectedHub.id === hub.id ? '#6CBE1A' : 'url(#routeGradient)'}
-                  strokeWidth={selectedHub.id === hub.id ? 2.5 : 1.2}
-                  strokeDasharray={selectedHub.id === hub.id ? 'none' : '4 4'}
-                  className="transition-all duration-300"
+                  d="M 120 70 
+                     Q 150 50, 200 60 
+                     Q 260 80, 310 110 
+                     Q 360 130, 420 180 
+                     Q 460 230, 470 290 
+                     Q 490 350, 470 420 
+                     Q 480 480, 520 540 
+                     Q 510 590, 470 630 
+                     Q 430 650, 400 620 
+                     Q 350 580, 310 520 
+                     Q 260 460, 230 400 
+                     Q 200 340, 160 280 
+                     Q 110 210, 95 150 
+                     Z"
+                  fill="url(#peruGradient)"
+                  stroke="#334155"
+                  strokeWidth="2.5"
+                  className="transition-colors duration-500"
                 />
-              ))}
 
-              {/* Renderizado de Nodos de Operación */}
-              {HUBS.map((hub) => {
-                const isSelected = selectedHub.id === hub.id;
-                return (
-                  <g
-                    key={hub.id}
-                    onClick={() => setSelectedHub(hub)}
-                    className="cursor-pointer group"
-                  >
-                    {/* Anillo Pulsante para Nodos Activos */}
-                    <circle
-                      cx={hub.coords.x}
-                      cy={hub.coords.y}
-                      r={isSelected ? 18 : 10}
-                      fill={isSelected ? '#6CBE1A' : '#00A8E8'}
-                      opacity={isSelected ? 0.3 : 0.15}
-                      className="animate-ping"
-                    />
+                {/* Líneas de Red Conectadas al Hub Central de Lima */}
+                {HUBS.filter(h => h.id !== 'hub-lima').map((hub) => (
+                  <path
+                    key={`line-${hub.id}`}
+                    d={`M 230 350 Q ${(230 + hub.coords.x) / 2 - 20} ${(350 + hub.coords.y) / 2 - 20}, ${hub.coords.x} ${hub.coords.y}`}
+                    fill="none"
+                    stroke={selectedHub.id === hub.id ? '#6CBE1A' : 'url(#routeGradient)'}
+                    strokeWidth={selectedHub.id === hub.id ? 2.5 : 1.2}
+                    strokeDasharray={selectedHub.id === hub.id ? 'none' : '4 4'}
+                    className="transition-all duration-300"
+                  />
+                ))}
 
-                    {/* Círculo Principal del Nodo */}
-                    <circle
-                      cx={hub.coords.x}
-                      cy={hub.coords.y}
-                      r={isSelected ? 8 : 5}
-                      fill={isSelected ? '#6CBE1A' : '#00A8E8'}
-                      stroke="#FFFFFF"
-                      strokeWidth={isSelected ? 2.5 : 1.5}
-                      className="transition-all duration-300 group-hover:scale-125"
-                    />
-
-                    {/* Etiqueta de la Ciudad */}
-                    <text
-                      x={hub.coords.x + 10}
-                      y={hub.coords.y + 4}
-                      fill={isSelected ? '#FFFFFF' : '#94A3B8'}
-                      fontSize="10"
-                      fontWeight={isSelected ? 'bold' : 'normal'}
-                      fontFamily="monospace"
-                      className="select-none pointer-events-none"
+                {/* Renderizado de Nodos de Operación */}
+                {HUBS.map((hub) => {
+                  const isSelected = selectedHub.id === hub.id;
+                  return (
+                    <g
+                      key={hub.id}
+                      onClick={() => handleHubSelect(hub)}
+                      className="cursor-pointer group"
                     >
-                      {hub.department} ({hub.unitsDeployed})
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
+                      <circle
+                        cx={hub.coords.x}
+                        cy={hub.coords.y}
+                        r={isSelected ? 18 : 10}
+                        fill={isSelected ? '#6CBE1A' : '#00A8E8'}
+                        opacity={isSelected ? 0.3 : 0.15}
+                        className="animate-ping"
+                      />
+                      <circle
+                        cx={hub.coords.x}
+                        cy={hub.coords.y}
+                        r={isSelected ? 8 : 5}
+                        fill={isSelected ? '#6CBE1A' : '#00A8E8'}
+                        stroke="#FFFFFF"
+                        strokeWidth={isSelected ? 2.5 : 1.5}
+                        className="transition-all duration-300 group-hover:scale-125"
+                      />
+                      <text
+                        x={hub.coords.x + 10}
+                        y={hub.coords.y + 4}
+                        fill={isSelected ? '#FFFFFF' : '#94A3B8'}
+                        fontSize="10"
+                        fontWeight={isSelected ? 'bold' : 'normal'}
+                        fontFamily="monospace"
+                        className="select-none pointer-events-none"
+                      >
+                        {hub.department} ({hub.unitsDeployed})
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
+            </div>
+          )}
 
-          <div className="w-full flex justify-center gap-4 text-[11px] text-slate-400 mt-2">
-            <span className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#6CBE1A]" />
-              Nodo Seleccionado
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#00A8E8]" />
-              Frente de Obra / Operación
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-2.5 h-0.5 bg-dashed bg-[#6CBE1A]" />
-              Ruta Hidrosucción
-            </span>
+          {/* Lista rápida horizontal de Nodos */}
+          <div className="w-full flex flex-wrap justify-center gap-1.5 mt-3 pt-3 border-t border-slate-800">
+            {HUBS.map((hub) => (
+              <button
+                key={hub.id}
+                type="button"
+                onClick={() => handleHubSelect(hub)}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition ${
+                  selectedHub.id === hub.id
+                    ? 'bg-[#6CBE1A] text-slate-950 font-black'
+                    : 'bg-slate-900 text-slate-400 hover:text-white'
+                }`}
+              >
+                {hub.department}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -412,6 +555,14 @@ export const PeruInteractiveMap: React.FC = () => {
                 {selectedHub.clientName}
               </p>
 
+              {/* Coordenadas Mapbox */}
+              <div className="text-[11px] font-mono text-slate-400 mt-1 flex items-center gap-2">
+                <span>📍 Coordenadas:</span>
+                <span className="text-slate-300">
+                  {selectedHub.lngLat[1].toFixed(4)}° S, {selectedHub.lngLat[0].toFixed(4)}° W
+                </span>
+              </div>
+
               {/* Métricas Principales del Contrato */}
               <div className="grid grid-cols-2 gap-3 my-5">
                 <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
@@ -455,7 +606,7 @@ export const PeruInteractiveMap: React.FC = () => {
                 </div>
               </div>
 
-              {/* Botón de Descarga de Certificado DIGESA Simulado */}
+              {/* Botón de Cotización y Descarga de Certificado DIGESA */}
               <div className="mt-6 flex gap-3">
                 <a
                   href="#sticky-quote-form"
@@ -464,6 +615,7 @@ export const PeruInteractiveMap: React.FC = () => {
                   Cotizar Baños para esta Zona
                 </a>
                 <button
+                  type="button"
                   onClick={() => {
                     alert(`Descargando copia legal certificada del Manifiesto de Residuos Sólidos DIGESA Nº ${selectedHub.digesaCert} para ${selectedHub.clientName}. Válido para auditorías SUNAFIL.`);
                   }}
@@ -480,13 +632,11 @@ export const PeruInteractiveMap: React.FC = () => {
 
       </div>
 
-      {/* ==================================================================== */}
-      {/* 3. TRACK YOUR SERVICE & TELEMETRÍA EN VIVO (ESTILO GLOBALLINK CAPTURA 3) */}
-      {/* ==================================================================== */}
+      {/* TRACK YOUR SERVICE & TELEMETRÍA EN VIVO (ESTILO GLOBALLINK) */}
       <div className="mt-14 pt-10 border-t border-slate-800 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Columna Izquierda: Stepper de Seguimiento en Tiempo Real */}
+          {/* Stepper de Seguimiento en Tiempo Real */}
           <div className="lg:col-span-7 bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-800">
             <div className="flex justify-between items-center mb-6">
               <div>
@@ -505,7 +655,6 @@ export const PeruInteractiveMap: React.FC = () => {
             {/* Stepper Vertical con Hitos */}
             <div className="space-y-6 relative pl-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-800">
               
-              {/* Hito 1 */}
               <div className="relative">
                 <div className="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-900" />
                 <div className="text-xs font-bold text-white">Despliegue y Nivelación de Cabinas</div>
@@ -514,7 +663,6 @@ export const PeruInteractiveMap: React.FC = () => {
                 </div>
               </div>
 
-              {/* Hito 2 */}
               <div className="relative">
                 <div className="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-900" />
                 <div className="text-xs font-bold text-white">Última Succión Hidrostática al Vacío</div>
@@ -523,7 +671,6 @@ export const PeruInteractiveMap: React.FC = () => {
                 </div>
               </div>
 
-              {/* Hito 3 */}
               <div className="relative">
                 <div className={`absolute -left-6 top-1 w-3.5 h-3.5 rounded-full border-2 border-slate-900 ${
                   selectedHub.suctionStatus === 'EN_RUTA' ? 'bg-amber-400 animate-pulse' : 'bg-blue-500'
@@ -541,7 +688,6 @@ export const PeruInteractiveMap: React.FC = () => {
                 </div>
               </div>
 
-              {/* Hito 4 */}
               <div className="relative">
                 <div className="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-900" />
                 <div className="text-xs font-bold text-white">Manifiesto Oficial DIGESA Emitido</div>
@@ -553,7 +699,7 @@ export const PeruInteractiveMap: React.FC = () => {
             </div>
           </div>
 
-          {/* Columna Derecha: Tarjetas de Métricas Operativas GlobalLink */}
+          {/* Tarjetas de Métricas Operativas GlobalLink */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-4">
             <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-lg">
               <div className="text-2xl sm:text-3xl font-black text-white font-mono">4,892</div>

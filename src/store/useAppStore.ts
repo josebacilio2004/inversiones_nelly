@@ -26,6 +26,10 @@ interface AppState {
   toasts: ToastNotification[];
   showToast: (title: string, message: string, type?: 'success' | 'info' | 'warning' | 'error') => void;
   removeToast: (id: string) => void;
+
+  // Idioma Global (Español / Inglés)
+  language: 'ES' | 'EN';
+  setLanguage: (lang: 'ES' | 'EN') => void;
 }
 
 const INITIAL_CONTRACTS: RentalContract[] = [
@@ -275,6 +279,9 @@ export const useAppStore = create<AppState>((set) => ({
   rooms: INITIAL_ROOMS,
   invoices: INITIAL_INVOICES,
   toasts: [],
+  language: 'ES',
+
+  setLanguage: (lang) => set({ language: lang }),
 
   addContract: (contract) =>
     set((state) => ({
