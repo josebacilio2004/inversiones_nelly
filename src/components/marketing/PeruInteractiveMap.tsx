@@ -187,7 +187,6 @@ export const PeruInteractiveMap: React.FC = () => {
   const [selectedHub, setSelectedHub] = useState<OperationHub>(HUBS[0] as OperationHub);
   const [searchCode, setSearchCode] = useState('');
   const [viewMode, setViewMode] = useState<'mapbox' | 'vector'>('mapbox');
-  const [mapboxReady, setMapboxReady] = useState(false);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -212,7 +211,6 @@ export const PeruInteractiveMap: React.FC = () => {
       map.addControl(new mapboxgl.NavigationControl({ showCompass: true }), 'top-right');
 
       map.on('load', () => {
-        setMapboxReady(true);
 
         // Crear marcadores interactivos para cada cliente en el Perú
         HUBS.forEach((hub) => {

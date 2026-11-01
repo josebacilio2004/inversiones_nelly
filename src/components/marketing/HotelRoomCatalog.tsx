@@ -117,7 +117,7 @@ export const HotelRoomCatalog: React.FC = () => {
         ].map((cat) => (
           <button
             key={cat.id}
-            onClick={() => setSelectedCategory(cat.id as any)}
+            onClick={() => setSelectedCategory(cat.id as 'ALL' | 'SIMPLE' | 'MATRIMONIAL' | 'DOBLE' | 'SUITE')}
             className={`px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-all ${
               selectedCategory === cat.id
                 ? 'bg-slate-900 text-white shadow-md'

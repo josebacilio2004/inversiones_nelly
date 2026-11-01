@@ -33,7 +33,7 @@ export default function TerminosYCondicionesPage() {
               Marco Legal y Regulatorio
             </h2>
             <p>
-              Los servicios prestados por <strong>INVERSIONES NELLY S.A.C.</strong> se rigen estrictamente por la <strong>Norma Técnica Peruana G.050 "Seguridad durante la Construcción"</strong> (Resolución Ministerial Nº 427-2001-MTC/15.04 y sus modificatorias del Ministerio de Trabajo y Promoción del Empleo), la <strong>Ley de Gestión Integral de Residuos Sólidos (D.L. Nº 1278)</strong>, el <strong>Reglamento de la Ley Nº 29973 (Accesibilidad Universal para personas con discapacidad)</strong> y las directivas sanitarias de la <strong>Dirección General de Salud Ambiental (DIGESA)</strong> bajo la Autorización Sanitaria Nº DIG-2024-EP.
+              Los servicios prestados por <strong>INVERSIONES NELLY S.A.C.</strong> se rigen estrictamente por la <strong>Norma Técnica Peruana G.050 &ldquo;Seguridad durante la Construcción&rdquo;</strong> (Resolución Ministerial Nº 427-2001-MTC/15.04 y sus modificatorias del Ministerio de Trabajo y Promoción del Empleo), la <strong>Ley de Gestión Integral de Residuos Sólidos (D.L. Nº 1278)</strong>, el <strong>Reglamento de la Ley Nº 29973 (Accesibilidad Universal para personas con discapacidad)</strong> y las directivas sanitarias de la <strong>Dirección General de Salud Ambiental (DIGESA)</strong> bajo la Autorización Sanitaria Nº DIG-2024-EP.
             </p>
           </section>
 

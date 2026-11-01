@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       },
       { status: 201 }
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Error interno del servidor al procesar cotización' },
       { status: 500 }

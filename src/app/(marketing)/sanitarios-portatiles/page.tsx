@@ -15,31 +15,22 @@ export default function SanitariosPage() {
 
   return (
     <div className="pb-16 bg-[#0B1322]">
-      {/* 1. HERO LOGÍSTICO Y CENTRO DE OPERACIONES (SYSTEM DESIGN GLOBALLINK LOGISTICS) */}
-      <section className="relative bg-[#0F172A] text-white py-14 px-4 sm:px-6 overflow-hidden border-b border-slate-800">
-        {/* Background logístico vectorial nativo de alta tecnología (Zero dependencias de capturas) */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-25">
+      {/* 1. HERO LOGÍSTICO Y PRESENTACIÓN VISUAL DE CABINAS (CON FOTO DESTACADA Y FORMULARIO) */}
+      <section className="relative bg-[#0F172A] text-white py-12 px-4 sm:px-6 overflow-hidden border-b border-slate-800">
+        {/* Background logístico vectorial */}
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="logisticsTechGrid" width="40" height="40" patternUnits="userSpaceOnUse">
                 <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#6CBE1A" strokeWidth="0.5" strokeOpacity="0.25" />
                 <circle cx="40" cy="40" r="1.5" fill="#00A8E8" fillOpacity="0.4" />
               </pattern>
-              <linearGradient id="gridFade" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#0F172A" stopOpacity="0.95" />
-                <stop offset="50%" stopColor="#0B1322" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#0F172A" stopOpacity="0.95" />
-              </linearGradient>
             </defs>
             <rect width="100%" height="100%" fill="url(#logisticsTechGrid)" />
-            {/* Círculos de Radar y Vectores de Telemetría */}
             <circle cx="85%" cy="30%" r="220" fill="none" stroke="#6CBE1A" strokeWidth="1" strokeDasharray="4 8" strokeOpacity="0.3" />
             <circle cx="85%" cy="30%" r="140" fill="none" stroke="#00A8E8" strokeWidth="1" strokeDasharray="3 6" strokeOpacity="0.3" />
-            <line x1="10%" y1="20%" x2="90%" y2="80%" stroke="#6CBE1A" strokeWidth="0.75" strokeDasharray="5 5" strokeOpacity="0.2" />
-            <line x1="20%" y1="80%" x2="80%" y2="20%" stroke="#00A8E8" strokeWidth="0.75" strokeDasharray="5 5" strokeOpacity="0.2" />
           </svg>
           <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-transparent" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#6CBE1A]/15 via-transparent to-transparent" />
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
@@ -58,7 +49,48 @@ export default function SanitariosPage() {
               Flota especializada de <strong>baños portátiles de alto tránsito</strong> bajo la <strong>Norma Técnica G.050</strong>. Operamos con camiones hidrosuccionadores al vacío propios, químicos biodegradables de grado industrial y entrega inmediata de manifiestos ambientales DIGESA para auditorías de SUNAFIL y OEFA.
             </p>
 
-            {/* KPI Bar estilo GlobalLink Command Center */}
+            {/* Vitrina Visual de Impacto: Cabina en Operación Real */}
+            <div className="relative rounded-3xl overflow-hidden border-2 border-[#6CBE1A]/40 shadow-2xl bg-slate-950 mb-6 group">
+              <div className="relative h-64 sm:h-72 w-full overflow-hidden">
+                <img
+                  src="/images/sanitary_luxury_obra.jpg"
+                  alt="Baño Portátil de Obra en Frente de Trabajo - Inversiones Nelly"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+
+                {/* Badges Flotantes de Calidad */}
+                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                  <span className="bg-[#6CBE1A] text-slate-950 font-black text-xs px-3 py-1 rounded-xl shadow-lg flex items-center gap-1.5">
+                    <Icons.Check className="w-3.5 h-3.5" />
+                    HDPE Virgen 210L
+                  </span>
+                  <span className="bg-slate-950/80 backdrop-blur-md text-[#00A8E8] font-bold text-xs px-3 py-1 rounded-xl border border-[#00A8E8]/40">
+                    Bomba de Pie Manos Libres
+                  </span>
+                </div>
+
+                <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <div className="text-white font-black text-lg sm:text-xl">
+                      Cabinas Rotomoldeadas para Minería y Obras Civiles
+                    </div>
+                    <div className="text-slate-300 text-xs mt-0.5">
+                      Flota homologada con succión hidrostática periódica y certificado ambiental oficial
+                    </div>
+                  </div>
+                  <a
+                    href="#catalogo-sanitarios"
+                    className="bg-[#6CBE1A] hover:bg-[#5da715] text-slate-950 font-black text-xs px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow-lg shrink-0"
+                  >
+                    <span>Ver Catálogo</span>
+                    <Icons.ChevronDown className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* KPI Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 mb-6">
               <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl shadow-lg">
                 <div className="text-2xl font-black text-[#6CBE1A] font-mono">+1,250</div>
@@ -77,21 +109,6 @@ export default function SanitariosPage() {
                 <div className="text-[11px] text-slate-400 mt-0.5">Residuos Sólidos</div>
               </div>
             </div>
-
-            <div className="flex flex-wrap gap-3 text-xs text-slate-300">
-              <div className="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded-xl border border-slate-700/60">
-                <Icons.Check className="w-4 h-4 text-[#6CBE1A]" />
-                <span>Tanques 210L de ~450 usos continuos</span>
-              </div>
-              <div className="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded-xl border border-slate-700/60">
-                <Icons.Check className="w-4 h-4 text-[#00A8E8]" />
-                <span>Bomba de pedal 100% manos libres</span>
-              </div>
-              <div className="flex items-center gap-2 bg-slate-800/60 px-3 py-1.5 rounded-xl border border-slate-700/60">
-                <Icons.Check className="w-4 h-4 text-[#6CBE1A]" />
-                <span>Succión y lavado a presión programado</span>
-              </div>
-            </div>
           </div>
 
           <div id="sticky-quote-form" className="lg:col-span-5">
@@ -103,22 +120,8 @@ export default function SanitariosPage() {
         </div>
       </section>
 
-      {/* 2. MAPA INTERACTIVO DEL PERÚ CON CLIENTES Y OPERACIONES EN TIEMPO REAL (ESTILO GLOBALLINK) */}
-      <section className="py-14 px-4 sm:px-6 max-w-7xl mx-auto">
-        <PeruInteractiveMap />
-      </section>
-
-      {/* 3. WIDGET CALCULADORA NORMA G.050 */}
-      <section id="g050-calculator" className="py-14 px-4 max-w-7xl mx-auto">
-        <G050Calculator
-          onTransferToQuote={(data) => {
-            setQuotePrefill(data);
-          }}
-        />
-      </section>
-
-      {/* 4. CATÁLOGO TÉCNICO EXCLUSIVO DE BAÑOS PORTÁTILES */}
-      <section className="py-12 px-4 max-w-7xl mx-auto">
+      {/* 2. CATÁLOGO TÉCNICO EXCLUSIVO DE BAÑOS PORTÁTILES (PRIMERO, CON PASARELA Y MODAL 360°) */}
+      <section id="catalogo-sanitarios" className="py-14 px-4 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-10">
           <span className="text-xs font-bold text-[#6CBE1A] uppercase tracking-wider bg-[#6CBE1A]/20 px-3 py-1 rounded-full border border-[#6CBE1A]/30">
             Equipamiento de Grado Industrial
@@ -127,14 +130,23 @@ export default function SanitariosPage() {
             Catálogo Exclusivo de Baños Portátiles de Obra
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm mt-1">
-            Modelos rotomoldeados en polietileno virgen (HDPE) con estanqueidad garantizada y succión al vacío certificada por DIGESA.
+            Modelos rotomoldeados en polietileno virgen (HDPE) con estanqueidad garantizada, pasarela de fotos y visor 360° interactivo.
           </p>
         </div>
 
         <SanitaryCatalogGrid />
       </section>
 
-      {/* 5. CICLO OPERATIVO DEL SERVICIO EN 4 PASOS */}
+      {/* 3. WIDGET CALCULADORA NORMA G.050 */}
+      <section id="g050-calculator" className="py-14 px-4 max-w-7xl mx-auto border-t border-slate-800/80">
+        <G050Calculator
+          onTransferToQuote={(data) => {
+            setQuotePrefill(data);
+          }}
+        />
+      </section>
+
+      {/* 4. CICLO OPERATIVO DEL SERVICIO EN 4 PASOS */}
       <section className="bg-slate-900/80 text-white py-16 px-4 border-t border-slate-800">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -166,6 +178,23 @@ export default function SanitariosPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* 5. RED NACIONAL Y CENTRO DE OPERACIONES MAPBOX GL EN TIEMPO REAL */}
+      <section className="py-16 px-4 sm:px-6 max-w-7xl mx-auto border-t border-slate-800">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <span className="text-xs font-bold text-[#6CBE1A] uppercase tracking-wider bg-[#6CBE1A]/20 px-3 py-1 rounded-full border border-[#6CBE1A]/30 font-mono">
+            Mapbox GL™ • Telemetría Satelital
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-black text-white mt-3">
+            Centro de Operaciones y Red de Clientes en Todo el Perú
+          </h2>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">
+            Supervisión satelital y monitoreo en tiempo real de frentes de obra, consorcios viales y campamentos mineros.
+          </p>
+        </div>
+
+        <PeruInteractiveMap />
       </section>
     </div>
   );

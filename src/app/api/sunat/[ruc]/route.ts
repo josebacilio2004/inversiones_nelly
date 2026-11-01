@@ -17,7 +17,7 @@ export async function GET(
   try {
     const data = await lookupSunatRuc(ruc);
     return NextResponse.json(data);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Error al consultar padrón de contribuyentes' },
       { status: 500 }

@@ -453,42 +453,140 @@
       `;
     }
 
-    // VISTA 2: SANITARIOS PORTÁTILES (CON MAPBOX GL & CALCULADORA G.050 & PASARELA DE FOTOS)
+    // VISTA 2: SANITARIOS PORTÁTILES (CATÁLOGO PRIMERO, CALCULADORA G.050 & MAPBOX GL AL FINAL)
     function renderSanitarios(container) {
       container.innerHTML = `
         <div class="pb-16 bg-[#0B1322]">
           
-          <!-- Hero Logístico -->
+          <!-- Hero Logístico con Imagen de Impacto -->
           <section class="py-12 px-4 sm:px-6 max-w-7xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#6CBE1A]/20 border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-mono font-bold uppercase mb-4">
-              Red Nacional de Saneamiento • DIGESA Res. Nº DIG-2024
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div class="lg:col-span-7">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#6CBE1A]/20 border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-mono font-bold uppercase mb-4">
+                  Red Nacional de Saneamiento • DIGESA Res. Nº DIG-2024
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+                  Alquiler & Mantenimiento de <span class="text-[#6CBE1A]">Baños Portátiles</span> en Todo el Perú
+                </h1>
+                <p class="text-slate-300 text-sm max-w-3xl mt-3 leading-relaxed">
+                  Cabinas de polietileno virgen HDPE de alto tránsito bajo la <strong>Norma Técnica G.050</strong>. Operación con camiones hidrosuccionadores propios y entrega inmediata de manifiestos DIGESA.
+                </p>
+                <div class="flex flex-wrap gap-3 mt-6">
+                  <a href="#catalogo-toilets" class="bg-[#6CBE1A] hover:bg-[#5da715] text-slate-950 font-black px-6 py-3 rounded-2xl text-xs uppercase tracking-wider transition shadow-lg">
+                    Ver Catálogo Completo ↓
+                  </a>
+                  <a href="#calc-g050" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3 rounded-2xl text-xs border border-slate-700 transition">
+                    Calculadora G.050
+                  </a>
+                </div>
+              </div>
+              
+              <!-- Imagen Destacada del Baño Portátil en Obra -->
+              <div class="lg:col-span-5">
+                <div class="relative rounded-3xl overflow-hidden border-2 border-[#6CBE1A]/40 shadow-2xl bg-slate-950 group">
+                  <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80" alt="Baño Portátil en Obra" class="w-full h-64 sm:h-72 object-cover group-hover:scale-105 transition duration-500">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                  <div class="absolute bottom-4 left-4 right-4">
+                    <span class="bg-[#6CBE1A] text-slate-950 text-[10px] font-black px-2.5 py-1 rounded-lg">HDPE Virgen 210L</span>
+                    <div class="text-white font-black text-sm mt-1">Cabinas Rotomoldeadas para Minería y Obras</div>
+                    <div class="text-slate-300 text-xs">Succión al vacío programada con camión cisterna</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              Alquiler & Mantenimiento de <span class="text-[#6CBE1A]">Baños Portátiles</span> en Todo el Perú
-            </h1>
-            <p class="text-slate-300 text-sm max-w-3xl mt-3">
-              Cabinas de polietileno virgen HDPE de alto tránsito bajo la <strong>Norma Técnica G.050</strong>. Operación con camiones hidrosuccionadores propios y manifiestos DIGESA.
-            </p>
           </section>
 
-          <!-- MAPBOX GL CENTRO DE OPERACIONES EN VIVO -->
-          <section class="max-w-7xl mx-auto px-4 mb-14">
-            <div class="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-2xl">
-              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+          <!-- 1. CATÁLOGO DE PRODUCTOS (AHORA PRIMERO COMO FUE SOLICITADO) -->
+          <section id="catalogo-toilets" class="max-w-7xl mx-auto px-4 mb-16">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+              <span class="text-xs font-bold text-[#6CBE1A] uppercase tracking-wider bg-[#6CBE1A]/20 px-3 py-1 rounded-full border border-[#6CBE1A]/30">Equipamiento en Stock</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-white mt-2">Catálogo de Baños Portátiles de Obra</h2>
+              <p class="text-slate-400 text-xs mt-1">Explora nuestras cabinas sanitarias, pasarela de fotos y visualizador interactivo 360°</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              
+              <!-- Producto 1 -->
+              <div class="bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between p-4">
                 <div>
-                  <span class="text-[10px] font-mono font-bold text-[#6CBE1A] uppercase">Mapbox GL™ Telemetría Satelital en Tiempo Real</span>
-                  <h3 class="text-xl font-black text-white">Nodos de Saneamiento y Frentes de Obra en el Perú</h3>
+                  <div class="relative h-48 w-full rounded-2xl overflow-hidden bg-slate-950 mb-3">
+                    <img id="p1-img" src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                    <span class="absolute top-2 left-2 bg-[#6CBE1A] text-slate-950 text-[10px] font-black px-2 py-0.5 rounded">Norma G.050</span>
+                    <button onclick="cyclePhoto('p1', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">◀</button>
+                    <button onclick="cyclePhoto('p1', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">▶</button>
+                  </div>
+                  <h3 class="font-bold text-white text-sm">Sanitario Estándar de Obra</h3>
+                  <div class="text-xs text-slate-400 mt-1">Tanque 210L (~450 usos)</div>
+                  <div class="text-lg font-black text-[#6CBE1A] mt-2 font-mono">S/ 380 <span class="text-xs font-normal text-slate-400">/ mes</span></div>
                 </div>
-                <span class="bg-slate-800 text-[#00A8E8] px-3 py-1 rounded-xl text-xs font-mono border border-slate-700">Token Mapbox Activo</span>
+                <div class="space-y-2 mt-4">
+                  <button onclick="openFrame360('IN-SAN-01: Sanitario Estándar de Obra')" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl text-xs border border-slate-700">🔍 Ver en Frame 360°</button>
+                  <a href="https://wa.me/51998675270?text=Deseo%20cotizar%20Sanitario%20Est%C3%A1ndar%20210L" target="_blank" class="w-full block text-center bg-[#2E5A07] hover:bg-[#234505] text-white font-bold py-2 rounded-xl text-xs">Cotizar por WhatsApp</a>
+                </div>
               </div>
 
-              <!-- Contenedor del Mapa Mapbox -->
-              <div id="mapbox-container" class="w-full h-[450px] rounded-2xl overflow-hidden border border-slate-800 relative"></div>
+              <!-- Producto 2 -->
+              <div class="bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between p-4">
+                <div>
+                  <div class="relative h-48 w-full rounded-2xl overflow-hidden bg-slate-950 mb-3">
+                    <img id="p2-img" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                    <span class="absolute top-2 left-2 bg-[#00A8E8] text-white text-[10px] font-black px-2 py-0.5 rounded">VIP Manos Libres</span>
+                    <button onclick="cyclePhoto('p2', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">◀</button>
+                    <button onclick="cyclePhoto('p2', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">▶</button>
+                  </div>
+                  <h3 class="font-bold text-white text-sm">Sanitario Ejecutivo VIP a Pedal</h3>
+                  <div class="text-xs text-slate-400 mt-1">Lavamanos + bomba de pie</div>
+                  <div class="text-lg font-black text-[#6CBE1A] mt-2 font-mono">S/ 540 <span class="text-xs font-normal text-slate-400">/ mes</span></div>
+                </div>
+                <div class="space-y-2 mt-4">
+                  <button onclick="openFrame360('IN-SAN-02: Sanitario Ejecutivo VIP')" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl text-xs border border-slate-700">🔍 Ver en Frame 360°</button>
+                  <a href="https://wa.me/51998675270?text=Deseo%20cotizar%20Sanitario%20Ejecutivo%20VIP" target="_blank" class="w-full block text-center bg-[#2E5A07] hover:bg-[#234505] text-white font-bold py-2 rounded-xl text-xs">Cotizar por WhatsApp</a>
+                </div>
+              </div>
+
+              <!-- Producto 3 -->
+              <div class="bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between p-4">
+                <div>
+                  <div class="relative h-48 w-full rounded-2xl overflow-hidden bg-slate-950 mb-3">
+                    <img id="p3-img" src="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                    <span class="absolute top-2 left-2 bg-[#C8A064] text-slate-950 text-[10px] font-black px-2 py-0.5 rounded">Ley 29973</span>
+                    <button onclick="cyclePhoto('p3', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">◀</button>
+                    <button onclick="cyclePhoto('p3', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">▶</button>
+                  </div>
+                  <h3 class="font-bold text-white text-sm">Sanitario Accesible Universal</h3>
+                  <div class="text-xs text-slate-400 mt-1">Rampa nivel cero y pasamanos</div>
+                  <div class="text-lg font-black text-[#6CBE1A] mt-2 font-mono">S/ 650 <span class="text-xs font-normal text-slate-400">/ mes</span></div>
+                </div>
+                <div class="space-y-2 mt-4">
+                  <button onclick="openFrame360('IN-SAN-03: Sanitario Accesible Universal')" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl text-xs border border-slate-700">🔍 Ver en Frame 360°</button>
+                  <a href="https://wa.me/51998675270?text=Deseo%20cotizar%20Sanitario%20Accesible" target="_blank" class="w-full block text-center bg-[#2E5A07] hover:bg-[#234505] text-white font-bold py-2 rounded-xl text-xs">Cotizar por WhatsApp</a>
+                </div>
+              </div>
+
+              <!-- Producto 4 -->
+              <div class="bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between p-4">
+                <div>
+                  <div class="relative h-48 w-full rounded-2xl overflow-hidden bg-slate-950 mb-3">
+                    <img id="p4-img" src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                    <span class="absolute top-2 left-2 bg-emerald-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded">Alta Densidad</span>
+                    <button onclick="cyclePhoto('p4', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">◀</button>
+                    <button onclick="cyclePhoto('p4', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">▶</button>
+                  </div>
+                  <h3 class="font-bold text-white text-sm">Sanitario Autónomo Solar</h3>
+                  <div class="text-xs text-slate-400 mt-1">Luz LED solar y tanque 250L</div>
+                  <div class="text-lg font-black text-[#6CBE1A] mt-2 font-mono">S/ 590 <span class="text-xs font-normal text-slate-400">/ mes</span></div>
+                </div>
+                <div class="space-y-2 mt-4">
+                  <button onclick="openFrame360('IN-SAN-04: Sanitario Autónomo Solar')" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl text-xs border border-slate-700">🔍 Ver en Frame 360°</button>
+                  <a href="https://wa.me/51998675270?text=Deseo%20cotizar%20Sanitario%20Autonomo" target="_blank" class="w-full block text-center bg-[#2E5A07] hover:bg-[#234505] text-white font-bold py-2 rounded-xl text-xs">Cotizar por WhatsApp</a>
+                </div>
+              </div>
+
             </div>
           </section>
 
-          <!-- CALCULADORA NORMA G.050 -->
-          <section class="max-w-5xl mx-auto px-4 mb-14">
+          <!-- 2. CALCULADORA NORMA G.050 -->
+          <section id="calc-g050" class="max-w-5xl mx-auto px-4 mb-16">
             <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border-2 border-[#6CBE1A]/30 shadow-2xl">
               <div class="flex items-center justify-between gap-4 mb-6">
                 <div>
@@ -523,16 +621,21 @@
             </div>
           </section>
 
-          <!-- CATÁLOGO DE PRODUCTOS CON PASARELA DE FOTOS Y FRAME 360° -->
-          <section class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl sm:text-3xl font-black text-white mb-6 text-center">Catálogo de Baños Portátiles de Obra</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              
-              <!-- Producto 1 -->
-              <div class="bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between p-4">
+          <!-- 3. MAPBOX GL CENTRO DE OPERACIONES EN VIVO (AL FINAL) -->
+          <section class="max-w-7xl mx-auto px-4 mb-14">
+            <div class="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-2xl">
+              <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
                 <div>
-                  <div class="relative h-48 w-full rounded-2xl overflow-hidden bg-slate-950 mb-3">
-                    <img id="p1-img" src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                  <span class="text-[10px] font-mono font-bold text-[#6CBE1A] uppercase">Mapbox GL™ Telemetría Satelital en Tiempo Real</span>
+                  <h3 class="text-xl font-black text-white">Nodos de Saneamiento y Frentes de Obra en el Perú</h3>
+                </div>
+                <span class="bg-slate-800 text-[#00A8E8] px-3 py-1 rounded-xl text-xs font-mono border border-slate-700">Token Mapbox Activo</span>
+              </div>
+
+              <!-- Contenedor del Mapa Mapbox -->
+              <div id="mapbox-container" class="w-full h-[450px] rounded-2xl overflow-hidden border border-slate-800 relative"></div>
+            </div>
+          </section>
                     <span class="absolute top-2 left-2 bg-[#6CBE1A] text-slate-950 text-[10px] font-black px-2 py-0.5 rounded">Norma G.050</span>
                     <button onclick="cyclePhoto('p1', -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">‹</button>
                     <button onclick="cyclePhoto('p1', 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 bg-black/60 rounded-full text-white text-xs">›</button>

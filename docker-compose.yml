@@ -19,7 +19,7 @@ services:
       POSTGRES_DB: ${DB_NAME:-inversiones_nelly_db}
       TZ: 'America/Lima'
     ports:
-      - "5432:5432"
+      - "${HOST_PORT_DB:-5437}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -41,7 +41,7 @@ services:
     restart: unless-stopped
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-NellyRedis2026!}
     ports:
-      - "6379:6379"
+      - "${HOST_PORT_REDIS:-6385}:6379"
     volumes:
       - redis_data:/data
     networks:
@@ -67,7 +67,7 @@ services:
       postgres_db:
         condition: service_healthy
     command: >
-      sh -c "npx prisma migrate deploy && npx tsx prisma/seed.ts"
+      sh -c "npx prisma db push --accept-data-loss && npx tsx prisma/seed.ts"
     networks:
       - nelly_network
 
@@ -81,7 +81,7 @@ services:
     container_name: nelly_nextjs_app
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "${HOST_PORT_APP:-3005}:3000"
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://${DB_USER:-nelly_admin}:${DB_PASSWORD:-NellySecret2026!}@postgres_db:5432/${DB_NAME:-inversiones_nelly_db}?schema=public
@@ -107,7 +107,7 @@ services:
     container_name: nelly_nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "${HOST_PORT_HTTP:-8085}:80"
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
