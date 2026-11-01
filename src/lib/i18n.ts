@@ -63,10 +63,19 @@ export const translations = {
 
     // Hotel Page
     hotelBadge: 'Hotel Nelly • Hospitalidad Corporativa en el Perú',
-    hotelTitleFinding: 'Finding Your Ideal',
-    hotelTitleStay: 'Executive Stay',
+    hotelTitleFinding: 'Tu Estadía Ejecutiva',
+    hotelTitleStay: 'Ideal para Obra',
     hotelSubtitle:
       'Diseñado exclusivamente para ingenieros residentes, cuadrillas de contratistas y supervisores de obra. Confort hotelero premium, cochera cerrada para camionetas 4x4, desayuno desde las 05:30 AM y facturación mensual consolidada con línea de crédito SUNAT.',
+    hotelMostViewed: 'Habitaciones Más Solicitadas',
+    hotelMostViewedSub:
+      'Descubre las habitaciones con mayor demanda para estancias ejecutivas de contratistas y residentes de obra en el Perú.',
+    hotelServicesTitle: 'Nuestros Servicios Corporativos',
+    hotelServicesSub:
+      'Servicios especialmente diseñados para la tranquilidad, descanso y puntualidad de los equipos técnicos de obra.',
+    hotelBlueprintTitle: 'Plano de Distribución Arquitectónica',
+    hotelBlueprintSub:
+      'Distribución modular optimizada para el descanso, trabajo técnico con planos y seguridad de herramientas.',
   },
   EN: {
     // Top bar & Header
@@ -134,5 +143,14 @@ export const translations = {
     hotelTitleStay: 'Executive Stay',
     hotelSubtitle:
       'Engineered specifically for resident engineers, contractor crews, and project supervisors. Premium comfort, gated 4x4 parking, early breakfast from 05:30 AM, and consolidated monthly billing with SUNAT credit line.',
+    hotelMostViewed: 'Most Viewed Rooms',
+    hotelMostViewedSub:
+      'Discover the most requested rooms for executive stays of contractors and site engineers in Peru.',
+    hotelServicesTitle: 'Our Executive Services',
+    hotelServicesSub:
+      'Services tailored for peace of mind, rest, and punctual field dispatch.',
+    hotelBlueprintTitle: 'Architectural House & Room Blueprint',
+    hotelBlueprintSub:
+      'Modular floor plan optimized for rest, technical workstation with blueprints, and tool security.',
   },
 };

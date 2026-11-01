@@ -4,8 +4,13 @@ import React, { useState } from 'react';
 import { HotelRoomCatalog } from '@/components/marketing/HotelRoomCatalog';
 import { RoomBlueprintPlan } from '@/components/marketing/RoomBlueprintPlan';
 import { Icons } from '@/components/ui/Icons';
+import { useAppStore } from '@/store/useAppStore';
+import { translations } from '@/lib/i18n';
 
 export default function HotelPage() {
+  const { language } = useAppStore();
+  const t = translations[language];
+
   const [selectedLocation, setSelectedLocation] = useState('Lima Central / Proyectos Viales');
   const [selectedType, setSelectedType] = useState('Simple Ejecutiva');
 
@@ -34,18 +39,18 @@ export default function HotelPage() {
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C8A064]/20 border border-[#C8A064]/40 text-[#E5C388] text-xs font-mono font-bold uppercase tracking-wider">
                 <Icons.Bed className="w-4 h-4" />
-                Hotel Nelly • Hospitalidad Corporativa en el Perú
+                {t.hotelBadge}
               </div>
 
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
-                Finding Your Ideal <br />
+                {t.hotelTitleFinding} <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E5C388] via-[#C8A064] to-[#F5EBE0]">
-                  Executive Stay
+                  {t.hotelTitleStay}
                 </span>
               </h1>
 
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal">
-                Diseñado exclusivamente para ingenieros residentes, cuadrillas de contratistas y supervisores de obra. Confort hotelero premium, cochera cerrada para camionetas 4x4, desayuno desde las <strong>05:30 AM</strong> y facturación mensual consolidada con línea de crédito SUNAT.
+                {t.hotelSubtitle}
               </p>
 
               <div className="flex flex-wrap gap-4 text-xs pt-2">
@@ -174,10 +179,10 @@ export default function HotelPage() {
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Most Viewed
+            {t.hotelMostViewed}
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm mt-2">
-            Descubre las habitaciones con mayor demanda para estancias ejecutivas de contratistas y residentes de obra en el Perú.
+            {t.hotelMostViewedSub}
           </p>
         </div>
 
@@ -340,10 +345,10 @@ export default function HotelPage() {
               Logística & Confort
             </span>
             <h2 className="text-3xl font-black text-white mt-2">
-              Our Executive Services
+              {t.hotelServicesTitle}
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm mt-1">
-              Servicios especialmente diseñados para la tranquilidad y puntualidad de los equipos técnicos de obra.
+              {t.hotelServicesSub}
             </p>
           </div>
 

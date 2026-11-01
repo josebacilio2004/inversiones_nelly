@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icons } from '@/components/ui/Icons';
+import { useAppStore } from '@/store/useAppStore';
+import { translations } from '@/lib/i18n';
 
 interface PlanDetails {
   id: string;
@@ -89,6 +91,9 @@ const ROOM_PLANS: Record<string, PlanDetails> = {
 };
 
 export const RoomBlueprintPlan: React.FC = () => {
+  const { language } = useAppStore();
+  const t = translations[language];
+
   const [selectedPlanId, setSelectedPlanId] = useState<string>('simple');
   const plan: PlanDetails = (ROOM_PLANS[selectedPlanId] ?? ROOM_PLANS.simple) as PlanDetails;
 
@@ -105,10 +110,10 @@ export const RoomBlueprintPlan: React.FC = () => {
             System Design Arquitectónico • Estándar Glasshaven
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight uppercase">
-            House & Room Plan
+            {t.hotelBlueprintTitle}
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm mt-1">
-            Distribución modular optimizada para el descanso, trabajo remoto con planos y seguridad de herramientas.
+            {t.hotelBlueprintSub}
           </p>
         </div>
 
