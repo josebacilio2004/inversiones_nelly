@@ -15,22 +15,25 @@ export default function SanitariosPage() {
 
   return (
     <div className="pb-16 bg-[#0B1322]">
-      {/* 1. HERO LOGÍSTICO Y PRESENTACIÓN VISUAL DE CABINAS (CON FOTO DESTACADA Y FORMULARIO) */}
-      <section className="relative bg-[#0F172A] text-white py-12 px-4 sm:px-6 overflow-hidden border-b border-slate-800">
-        {/* Background logístico vectorial */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="logisticsTechGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#6CBE1A" strokeWidth="0.5" strokeOpacity="0.25" />
-                <circle cx="40" cy="40" r="1.5" fill="#00A8E8" fillOpacity="0.4" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#logisticsTechGrid)" />
-            <circle cx="85%" cy="30%" r="220" fill="none" stroke="#6CBE1A" strokeWidth="1" strokeDasharray="4 8" strokeOpacity="0.3" />
-            <circle cx="85%" cy="30%" r="140" fill="none" stroke="#00A8E8" strokeWidth="1" strokeDasharray="3 6" strokeOpacity="0.3" />
-          </svg>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#0F172A]/90 to-transparent" />
+      {/* 1. HERO LOGÍSTICO CON VÍDEO CINEMATOGRÁFICO DE FONDO Y PRESENTACIÓN VISUAL */}
+      <section className="relative bg-[#0F172A] text-white py-14 px-4 sm:px-6 overflow-hidden border-b border-slate-800">
+        {/* VÍDEO CINEMATOGRÁFICO DE FONDO CON CONTRASTE Y GRADING DE COLOR DE MARCA */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover scale-105 filter brightness-[0.45] contrast-[1.25] saturate-[1.15]"
+          >
+            <source src="/videos/landing1.mp4" type="video/mp4" />
+          </video>
+          {/* Capas Cinematográficas que combinan con los colores corporativos: Verde Ecológico #6CBE1A y Azul #00A8E8 */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/85 to-[#0B1322]/90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1322] via-transparent to-[#0F172A]/75" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#6CBE1A]/20 via-transparent to-transparent mix-blend-screen" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-[#00A8E8]/15 via-transparent to-transparent mix-blend-screen" />
+          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#6CBE1A_1px,transparent_1px)] [background-size:32px_32px]" />
         </div>
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">

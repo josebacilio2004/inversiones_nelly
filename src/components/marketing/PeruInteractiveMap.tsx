@@ -202,40 +202,41 @@ export const PeruInteractiveMap: React.FC = () => {
       const map = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: 'mapbox://styles/mapbox/dark-v11',
-        center: [-75.0152, -9.1899], // Centro geográfico del Perú
-        zoom: 5.0,
-        pitch: 35,
+        center: [-75.2, -9.6], // Centro geográfico óptimo de visualización del Perú
+        zoom: 5.1,
+        pitch: 0, // Vista ortogonal cenital precisa para fijar nodos exactamente en su coordenada
         attributionControl: false,
       });
 
       map.addControl(new mapboxgl.NavigationControl({ showCompass: true }), 'top-right');
 
       map.on('load', () => {
-
-        // Crear marcadores interactivos para cada cliente en el Perú
+        // Crear marcadores interactivos georreferenciados para cada cliente en el Perú
         HUBS.forEach((hub) => {
           const el = document.createElement('div');
           el.className = 'custom-map-marker group cursor-pointer';
-          el.style.width = '32px';
-          el.style.height = '32px';
-          el.style.position = 'relative';
+          el.style.width = '34px';
+          el.style.height = '34px';
 
           el.innerHTML = `
-            <div class="absolute inset-0 rounded-full bg-[#6CBE1A] opacity-40 animate-ping"></div>
-            <div class="w-8 h-8 rounded-full bg-[#0F172A] border-2 border-[#6CBE1A] shadow-xl flex items-center justify-center text-[10px] font-black text-white font-mono hover:scale-125 transition-transform">
-              ${hub.unitsDeployed > 100 ? '+100' : hub.unitsDeployed}
+            <div style="position: relative; width: 34px; height: 34px; pointer-events: auto;">
+              <div style="position: absolute; inset: 0; border-radius: 9999px; background-color: #6CBE1A; opacity: 0.45;" class="animate-ping"></div>
+              <div style="position: relative; width: 34px; height: 34px; border-radius: 9999px; background-color: #0F172A; border: 2.5px solid #6CBE1A; box-shadow: 0 8px 16px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #FFFFFF; font-family: monospace; transition: transform 0.25s ease;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                ${hub.unitsDeployed > 100 ? '+100' : hub.unitsDeployed}
+              </div>
             </div>
           `;
 
-          const popup = new mapboxgl.Popup({ offset: 25, closeButton: false }).setHTML(`
-            <div style="background:#0F172A;color:white;padding:8px 12px;border-radius:12px;border:1px solid #6CBE1A;font-family:sans-serif;font-size:11px;">
-              <strong style="color:#6CBE1A;display:block;">${hub.name}</strong>
-              <div style="font-weight:bold;margin-top:2px;">${hub.clientName}</div>
+          const popup = new mapboxgl.Popup({ offset: 20, closeButton: false }).setHTML(`
+            <div style="background:#0F172A;color:white;padding:10px 14px;border-radius:14px;border:1.5px solid #6CBE1A;font-family:sans-serif;font-size:11px;box-shadow:0 12px 24px rgba(0,0,0,0.6);">
+              <strong style="color:#6CBE1A;display:block;font-size:12px;">${hub.name}</strong>
+              <div style="font-weight:bold;margin-top:3px;">${hub.clientName}</div>
               <div style="color:#00A8E8;margin-top:2px;">${hub.unitsDeployed} Baños • ${hub.contractCode}</div>
+              <div style="color:#C8A064;margin-top:2px;font-size:10px;">${hub.sector}</div>
             </div>
           `);
 
-          const marker = new mapboxgl.Marker({ element: el })
+          const marker = new mapboxgl.Marker({ element: el, anchor: 'center' })
             .setLngLat(hub.lngLat)
             .setPopup(popup)
             .addTo(map);

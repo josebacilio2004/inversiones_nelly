@@ -458,9 +458,18 @@
       container.innerHTML = `
         <div class="pb-16 bg-[#0B1322]">
           
-          <!-- Hero Logístico con Imagen de Impacto -->
-          <section class="py-12 px-4 sm:px-6 max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Hero Logístico con Vídeo Cinematográfico de Fondo e Imagen de Impacto -->
+          <section class="relative py-14 px-4 sm:px-6 max-w-7xl mx-auto overflow-hidden rounded-3xl mt-2 mb-10 border border-slate-800 bg-[#0F172A]">
+            <!-- Vídeo Cinematográfico de Fondo -->
+            <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+              <video autoPlay loop muted playsInline class="w-full h-full object-cover filter brightness-[0.45] contrast-[1.25] scale-105">
+                <source src="videos/landing1.mp4" type="video/mp4">
+              </video>
+              <div class="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/85 to-[#0B1322]/90"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0B1322] via-transparent to-[#0F172A]/75"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               <div class="lg:col-span-7">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#6CBE1A]/20 border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-mono font-bold uppercase mb-4">
                   Red Nacional de Saneamiento • DIGESA Res. Nº DIG-2024
@@ -778,9 +787,9 @@
       const map = new mapboxgl.Map({
         container: 'mapbox-container',
         style: 'mapbox://styles/mapbox/dark-v11',
-        center: [-75.0152, -9.1899],
-        zoom: 5.0,
-        pitch: 35
+        center: [-75.2, -9.6],
+        zoom: 5.1,
+        pitch: 0
       });
 
       map.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -790,7 +799,7 @@
         markerEl.className = 'w-7 h-7 rounded-full bg-[#0F172A] border-2 border-[#6CBE1A] flex items-center justify-center text-[10px] font-black text-white font-mono shadow-xl cursor-pointer hover:scale-125 transition';
         markerEl.innerText = hub.units;
 
-        const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
+        const popup = new mapboxgl.Popup({ offset: 20 }).setHTML(`
           <div style="background:#0F172A;color:white;padding:8px;font-size:11px;font-family:sans-serif;border-radius:8px;border:1px solid #6CBE1A">
             <strong style="color:#6CBE1A">${hub.name}</strong><br/>
             ${hub.client}<br/>
@@ -798,7 +807,7 @@
           </div>
         `);
 
-        new mapboxgl.Marker({ element: markerEl })
+        new mapboxgl.Marker({ element: markerEl, anchor: 'center' })
           .setLngLat(hub.lngLat)
           .setPopup(popup)
           .addTo(map);
