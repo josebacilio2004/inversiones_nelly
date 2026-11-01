@@ -15,119 +15,102 @@ export default function SanitariosPage() {
 
   return (
     <div className="pb-16 bg-[#0B1322]">
-      {/* 1. HERO LOGÍSTICO CON VÍDEO CINEMATOGRÁFICO DE FONDO Y PRESENTACIÓN VISUAL */}
-      <section className="relative bg-[#0F172A] text-white py-14 px-4 sm:px-6 overflow-hidden border-b border-slate-800">
-        {/* VÍDEO CINEMATOGRÁFICO DE FONDO CON CONTRASTE Y GRADING DE COLOR DE MARCA */}
+      {/* 1. HERO CINEMATOGRÁFICO DE PRESENTACIÓN A ANCHO COMPLETO CON VÍDEO TRANSPARENTE DE FONDO */}
+      <section className="relative min-h-[82vh] flex items-center justify-center text-white py-16 px-4 sm:px-6 overflow-hidden border-b border-slate-800">
+        {/* VÍDEO DE FONDO CLARAMENTE VISIBLE CON OVERLAY ULTRA TRANSPARENTE */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover scale-105 filter brightness-[0.45] contrast-[1.25] saturate-[1.15]"
+            className="w-full h-full object-cover scale-100 filter brightness-[0.78] contrast-[1.12] saturate-[1.10]"
           >
             <source src="/videos/landing1.mp4" type="video/mp4" />
           </video>
-          {/* Capas Cinematográficas que combinan con los colores corporativos: Verde Ecológico #6CBE1A y Azul #00A8E8 */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A]/95 via-[#0F172A]/85 to-[#0B1322]/90" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1322] via-transparent to-[#0F172A]/75" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#6CBE1A]/20 via-transparent to-transparent mix-blend-screen" />
+          {/* Capas sutiles que permiten ver el video claramente manteniendo la legibilidad de la marca */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/65 via-slate-950/40 to-slate-950/70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1322] via-transparent to-slate-950/50" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#6CBE1A]/15 via-transparent to-transparent mix-blend-screen" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-[#00A8E8]/15 via-transparent to-transparent mix-blend-screen" />
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#6CBE1A_1px,transparent_1px)] [background-size:32px_32px]" />
         </div>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
-          <div className="lg:col-span-7 pt-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#6CBE1A]/20 border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-mono font-bold uppercase mb-4">
-              <Icons.Truck className="w-4 h-4" />
-              Red Nacional de Saneamiento • Res. DIGESA Nº DIG-2024
-            </div>
-
-            <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-white mb-4">
-              Alquiler & Mantenimiento de{' '}
-              <span className="text-[#6CBE1A]">Baños Portátiles</span> en Todo el Perú
-            </h1>
-
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
-              Flota especializada de <strong>baños portátiles de alto tránsito</strong> bajo la <strong>Norma Técnica G.050</strong>. Operamos con camiones hidrosuccionadores al vacío propios, químicos biodegradables de grado industrial y entrega inmediata de manifiestos ambientales DIGESA para auditorías de SUNAFIL y OEFA.
-            </p>
-
-            {/* Vitrina Visual de Impacto: Cabina en Operación Real */}
-            <div className="relative rounded-3xl overflow-hidden border-2 border-[#6CBE1A]/40 shadow-2xl bg-slate-950 mb-6 group">
-              <div className="relative h-64 sm:h-72 w-full overflow-hidden">
-                <img
-                  src="/images/sanitary_luxury_obra.jpg"
-                  alt="Baño Portátil de Obra en Frente de Trabajo - Inversiones Nelly"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
-
-                {/* Badges Flotantes de Calidad */}
-                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                  <span className="bg-[#6CBE1A] text-slate-950 font-black text-xs px-3 py-1 rounded-xl shadow-lg flex items-center gap-1.5">
-                    <Icons.Check className="w-3.5 h-3.5" />
-                    HDPE Virgen 210L
-                  </span>
-                  <span className="bg-slate-950/80 backdrop-blur-md text-[#00A8E8] font-bold text-xs px-3 py-1 rounded-xl border border-[#00A8E8]/40">
-                    Bomba de Pie Manos Libres
-                  </span>
-                </div>
-
-                <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <div className="text-white font-black text-lg sm:text-xl">
-                      Cabinas Rotomoldeadas para Minería y Obras Civiles
-                    </div>
-                    <div className="text-slate-300 text-xs mt-0.5">
-                      Flota homologada con succión hidrostática periódica y certificado ambiental oficial
-                    </div>
-                  </div>
-                  <a
-                    href="#catalogo-sanitarios"
-                    className="bg-[#6CBE1A] hover:bg-[#5da715] text-slate-950 font-black text-xs px-4 py-2 rounded-xl transition flex items-center gap-1.5 shadow-lg shrink-0"
-                  >
-                    <span>Ver Catálogo</span>
-                    <Icons.ChevronDown className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* KPI Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 mb-6">
-              <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl shadow-lg">
-                <div className="text-2xl font-black text-[#6CBE1A] font-mono">+1,250</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">Baños en Obra</div>
-              </div>
-              <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl shadow-lg">
-                <div className="text-2xl font-black text-[#00A8E8] font-mono">100%</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">Camiones Propios</div>
-              </div>
-              <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl shadow-lg">
-                <div className="text-2xl font-black text-[#C8A064] font-mono">18 Reg.</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">Cobertura Nacional</div>
-              </div>
-              <div className="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl shadow-lg">
-                <div className="text-2xl font-black text-white font-mono">DIGESA</div>
-                <div className="text-[11px] text-slate-400 mt-0.5">Residuos Sólidos</div>
-              </div>
-            </div>
+        {/* CONTENIDO DEL HERO: 100% PRESENTACIÓN DE GRAN IMPACTO */}
+        <div className="max-w-5xl mx-auto text-center relative z-10 py-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-[#6CBE1A]/40 text-[#6CBE1A] text-xs font-mono font-bold uppercase mb-6 shadow-xl">
+            <span className="w-2 h-2 rounded-full bg-[#6CBE1A] animate-pulse"></span>
+            <Icons.Truck className="w-4 h-4" />
+            <span>Red Nacional de Saneamiento • Res. DIGESA Nº DIG-2024-EP</span>
           </div>
 
-          <div id="sticky-quote-form" className="lg:col-span-5">
-            <StickyQuoteForm
-              initialUnits={quotePrefill.units}
-              initialFrequency={quotePrefill.frequency}
-            />
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white mb-6 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+            Liderazgo Nacional en Alquiler & Succión de{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6CBE1A] to-[#8ee238]">
+              Baños Portátiles
+            </span>{' '}
+            para Obra y Minería
+          </h1>
+
+          <p className="text-slate-200 text-sm sm:text-lg leading-relaxed max-w-3xl mx-auto mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            Equipamos tus frentes de construcción, consorcios viales y campamentos mineros con cabinas rotomoldeadas en HDPE de 210L bajo la <strong>Norma Técnica Peruana G.050</strong>. Operación continua con camiones hidrosuccionadores al vacío propios, desinfección biodegradable y entrega de <strong>Manifiestos DIGESA</strong> para auditorías de SUNAFIL.
+          </p>
+
+          {/* Botones de Navegación y Acción (CTAs) */}
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10">
+            <a
+              href="#seccion-cotizador"
+              className="bg-[#6CBE1A] hover:bg-[#5da715] text-slate-950 font-black text-sm px-6 py-3.5 rounded-2xl transition flex items-center gap-2 shadow-xl shadow-[#6CBE1A]/20 transform hover:-translate-y-0.5"
+            >
+              <Icons.Calculator className="w-4 h-4" />
+              <span>Cotizar Baños para Obra ↓</span>
+            </a>
+
+            <a
+              href="#catalogo-sanitarios"
+              className="bg-slate-900/80 hover:bg-slate-800 text-white font-bold text-sm px-6 py-3.5 rounded-2xl backdrop-blur-md border border-slate-700 transition flex items-center gap-2 shadow-lg hover:border-slate-500"
+            >
+              <Icons.Eye className="w-4 h-4 text-[#00A8E8]" />
+              <span>Ver Catálogo Técnico 360° ↓</span>
+            </a>
+
+            <a
+              href="https://wa.me/51998675270?text=Hola%20Inversiones%20Nelly,%20deseo%20cotizar%20baños%20portátiles%20para%20un%20proyecto"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-emerald-600/90 hover:bg-emerald-600 text-white font-bold text-sm px-5 py-3.5 rounded-2xl backdrop-blur-md transition flex items-center gap-2 shadow-lg"
+            >
+              <Icons.Phone className="w-4 h-4" />
+              <span>WhatsApp 24/7 (+51 998 675 270)</span>
+            </a>
+          </div>
+
+          {/* 4 KPIs Flotantes con Glassmorphism */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto">
+            <div className="bg-slate-950/70 backdrop-blur-md border border-slate-800/80 p-4 rounded-2xl shadow-xl">
+              <div className="text-2xl sm:text-3xl font-black text-[#6CBE1A] font-mono">+1,250</div>
+              <div className="text-xs text-slate-300 mt-1 font-medium">Baños en Operación</div>
+            </div>
+            <div className="bg-slate-950/70 backdrop-blur-md border border-slate-800/80 p-4 rounded-2xl shadow-xl">
+              <div className="text-2xl sm:text-3xl font-black text-[#00A8E8] font-mono">100%</div>
+              <div className="text-xs text-slate-300 mt-1 font-medium">Cisternas Propias</div>
+            </div>
+            <div className="bg-slate-950/70 backdrop-blur-md border border-slate-800/80 p-4 rounded-2xl shadow-xl">
+              <div className="text-2xl sm:text-3xl font-black text-[#C8A064] font-mono">18 Regiones</div>
+              <div className="text-xs text-slate-300 mt-1 font-medium">Cobertura Nacional</div>
+            </div>
+            <div className="bg-slate-950/70 backdrop-blur-md border border-slate-800/80 p-4 rounded-2xl shadow-xl">
+              <div className="text-2xl sm:text-3xl font-black text-white font-mono">DIGESA</div>
+              <div className="text-xs text-slate-300 mt-1 font-medium">Residuos Homologados</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. CATÁLOGO TÉCNICO EXCLUSIVO DE BAÑOS PORTÁTILES (PRIMERO, CON PASARELA Y MODAL 360°) */}
-      <section id="catalogo-sanitarios" className="py-14 px-4 max-w-7xl mx-auto">
+      {/* 2. CATÁLOGO TÉCNICO EXCLUSIVO DE BAÑOS PORTÁTILES (PASARELA DE FOTOS Y VISOR 360°) */}
+      <section id="catalogo-sanitarios" className="py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <span className="text-xs font-bold text-[#6CBE1A] uppercase tracking-wider bg-[#6CBE1A]/20 px-3 py-1 rounded-full border border-[#6CBE1A]/30">
-            Equipamiento de Grado Industrial
+          <span className="text-xs font-bold text-[#6CBE1A] uppercase tracking-wider bg-[#6CBE1A]/20 px-3.5 py-1 rounded-full border border-[#6CBE1A]/30 font-mono">
+            Equipamiento de Grado Industrial HDPE
           </span>
           <h2 className="text-2xl sm:text-4xl font-black text-white mt-3">
             Catálogo Exclusivo de Baños Portátiles de Obra
@@ -140,13 +123,43 @@ export default function SanitariosPage() {
         <SanitaryCatalogGrid />
       </section>
 
-      {/* 3. WIDGET CALCULADORA NORMA G.050 */}
-      <section id="g050-calculator" className="py-14 px-4 max-w-7xl mx-auto border-t border-slate-800/80">
-        <G050Calculator
-          onTransferToQuote={(data) => {
-            setQuotePrefill(data);
-          }}
-        />
+      {/* 3. SECCIÓN DEDICADA DE COTIZACIÓN B2B Y CALCULADORA NORMA G.050 (AQUÍ ESTÁ EL COTIZADOR) */}
+      <section id="seccion-cotizador" className="py-16 px-4 sm:px-6 max-w-7xl mx-auto border-t border-slate-800/80">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="text-xs font-bold text-[#00A8E8] uppercase tracking-wider bg-[#00A8E8]/20 px-3.5 py-1 rounded-full border border-[#00A8E8]/30 font-mono">
+            Dimensionamiento Técnico & Presupuesto Inmediato
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-black text-white mt-3">
+            Calculadora de la Norma Técnica G.050 y Cotizador en Obra
+          </h2>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">
+            Calcula la dotación legal de cabinas sanitarias según el número de trabajadores en tu frente de obra y cotiza al instante con tarifa corporativa.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Calculadora G.050 a la izquierda */}
+          <div className="lg:col-span-7">
+            <G050Calculator
+              onTransferToQuote={(data) => {
+                setQuotePrefill(data);
+                // Scroll suave hacia el formulario de cotización
+                const el = document.getElementById('sticky-quote-form');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            />
+          </div>
+
+          {/* Formulario de Cotización B2B a la derecha */}
+          <div id="sticky-quote-form" className="lg:col-span-5">
+            <StickyQuoteForm
+              initialUnits={quotePrefill.units}
+              initialFrequency={quotePrefill.frequency}
+            />
+          </div>
+        </div>
       </section>
 
       {/* 4. CICLO OPERATIVO DEL SERVICIO EN 4 PASOS */}

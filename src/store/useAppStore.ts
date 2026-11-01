@@ -4,7 +4,9 @@ import type {
   HotelRoom, 
   Invoice, 
   ToastNotification, 
-  RoomStatus 
+  RoomStatus,
+  CompanyInfo,
+  SystemUser
 } from '@/types';
 
 interface AppState {
@@ -21,6 +23,16 @@ interface AppState {
   // Estado de Facturas SUNAT
   invoices: Invoice[];
   addInvoice: (invoice: Invoice) => void;
+
+  // Configuración de Datos de la Empresa
+  companyInfo: CompanyInfo;
+  updateCompanyInfo: (info: Partial<CompanyInfo>) => void;
+
+  // Gestión de Usuarios del Sistema
+  users: SystemUser[];
+  addUser: (user: Omit<SystemUser, 'id' | 'lastLogin'>) => void;
+  toggleUserStatus: (id: string) => void;
+  deleteUser: (id: string) => void;
 
   // Sistema de Notificaciones Toast
   toasts: ToastNotification[];
@@ -274,14 +286,148 @@ const INITIAL_INVOICES: Invoice[] = [
   { id: 'inv3', number: 'B001-0001289', type: 'BOLETA', docNumber: '44556677', clientName: 'MENDOZA ROBLES CARLOS ALBERTO', businessUnit: 'HOTEL', amount: 440, igv: 79.20, total: 519.20, date: '2026-10-25', sunatStatus: 'ACEPTADO_SUNAT' },
 ];
 
+const INITIAL_COMPANY_INFO: CompanyInfo = {
+  ruc: '20608945123',
+  businessName: 'INVERSIONES NELLY S.A.C.',
+  tradeName: 'Inversiones Nelly - Eco-Sanitarios & Hotel Ejecutivo',
+  fiscalAddress: 'Jr. Las Palmeras N° 245, Chosica, Lima, Perú',
+  operationalBase: 'Km 42.5 Carretera Central, San Mateo de Huanchor / Lima Este',
+  legalRepresentative: 'Nelly Gladys Huamán de Bacilio',
+  representativeDni: '09876543',
+  phoneCentral: '(01) 719-8420',
+  emergencyWhatsapp: '+51 998 675 270',
+  billingEmail: 'facturacion@inversionesnelly.com',
+  digesaAuthorization: 'Resolución Directoral Nº DIG-2024-EP (Saneamiento Ambiental)',
+  eorsMinamRegistry: 'EO-RS-0042-2024-MINAM (Empresa Operadora de Residuos)',
+  bankAccounts: [
+    {
+      bank: 'Banco de Crédito del Perú (BCP)',
+      accountType: 'Cuenta Corriente MN (Soles)',
+      accountNumber: '191-94827104-0-32',
+      cci: '002-191-0094827104032-55',
+      currency: 'PEN',
+    },
+    {
+      bank: 'BBVA Perú',
+      accountType: 'Cuenta Corriente MN (Soles)',
+      accountNumber: '0011-0320-0100492837',
+      cci: '011-320-000100492837-18',
+      currency: 'PEN',
+    },
+    {
+      bank: 'Banco de la Nación (SUNAT Detracciones)',
+      accountType: 'Cuenta de Detracciones (Servicios de Saneamiento 10% - 12%)',
+      accountNumber: '00-068-194820',
+      cci: '018-068-000068194820-77',
+      currency: 'PEN',
+    },
+  ],
+};
+
+const INITIAL_USERS: SystemUser[] = [
+  {
+    id: 'usr-1',
+    name: 'Nelly Gladys Huamán',
+    email: 'gerencia@inversionesnelly.com',
+    role: 'SUPER_ADMIN',
+    roleLabel: 'Super Administrador (Gerencia General)',
+    status: 'ACTIVO',
+    phone: '+51 998 675 270',
+    lastLogin: 'Hace 5 minutos (Sesión Activa)',
+  },
+  {
+    id: 'usr-2',
+    name: 'Ing. Carlos Bacilio H.',
+    email: 'operaciones@inversionesnelly.com',
+    role: 'JEFE_OPERACIONES',
+    roleLabel: 'Jefe de Operaciones & Logística de Sanitarios',
+    status: 'ACTIVO',
+    phone: '+51 987 654 321',
+    lastLogin: 'Hoy 14:15 hrs',
+  },
+  {
+    id: 'usr-3',
+    name: 'Patricia Morales Soto',
+    email: 'recepcion@inversionesnelly.com',
+    role: 'RECEPCION_HOTEL',
+    roleLabel: 'Recepción & Reservas Hotel Nelly',
+    status: 'ACTIVO',
+    phone: '+51 976 543 210',
+    lastLogin: 'Hoy 08:30 hrs',
+  },
+  {
+    id: 'usr-4',
+    name: 'C.P.C. Luis Enrique Alarcón',
+    email: 'contabilidad@inversionesnelly.com',
+    role: 'FACTURACION_CONTABILIDAD',
+    roleLabel: 'Facturación Electrónica SUNAT & Cobranzas',
+    status: 'ACTIVO',
+    phone: '+51 965 432 109',
+    lastLogin: 'Ayer 18:40 hrs',
+  },
+  {
+    id: 'usr-5',
+    name: 'Manuel Cárdenas (Operador Cisterna)',
+    email: 'flota.succion@inversionesnelly.com',
+    role: 'JEFE_OPERACIONES',
+    roleLabel: 'Conductor Camión Succionador Certificado',
+    status: 'ACTIVO',
+    phone: '+51 954 321 098',
+    lastLogin: 'Hoy 06:10 hrs',
+  },
+  {
+    id: 'usr-6',
+    name: 'Asistente de Guardia Nocturna',
+    email: 'guardia@inversionesnelly.com',
+    role: 'RECEPCION_HOTEL',
+    roleLabel: 'Turno Nocturno - Hospedaje',
+    status: 'INACTIVO',
+    phone: '+51 943 210 987',
+    lastLogin: '24/10/2026',
+  },
+];
+
 export const useAppStore = create<AppState>((set) => ({
   contracts: INITIAL_CONTRACTS,
   rooms: INITIAL_ROOMS,
   invoices: INITIAL_INVOICES,
+  companyInfo: INITIAL_COMPANY_INFO,
+  users: INITIAL_USERS,
   toasts: [],
   language: 'ES',
 
   setLanguage: (lang) => set({ language: lang }),
+
+  updateCompanyInfo: (info) =>
+    set((state) => ({
+      companyInfo: { ...state.companyInfo, ...info },
+    })),
+
+  addUser: (userData) =>
+    set((state) => {
+      const newUser: SystemUser = {
+        ...userData,
+        id: `usr-${Date.now()}`,
+        lastLogin: 'Recién registrado',
+      };
+      return {
+        users: [newUser, ...state.users],
+      };
+    }),
+
+  toggleUserStatus: (id) =>
+    set((state) => ({
+      users: state.users.map((u) =>
+        u.id === id
+          ? { ...u, status: u.status === 'ACTIVO' ? 'INACTIVO' : 'ACTIVO' }
+          : u
+      ),
+    })),
+
+  deleteUser: (id) =>
+    set((state) => ({
+      users: state.users.filter((u) => u.id !== id),
+    })),
 
   addContract: (contract) =>
     set((state) => ({

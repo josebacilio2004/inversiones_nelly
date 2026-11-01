@@ -11,6 +11,8 @@ export type AppRoute =
   | '/admin/sanitarios'
   | '/admin/hotel'
   | '/admin/facturacion'
+  | '/admin/empresa'
+  | '/admin/usuarios'
   | '/admin/devops';
 
 export type SanitaryCategory =
@@ -133,4 +135,46 @@ export interface G050CalculationResult {
   sinksRequired: number;
   recommendedSuction: string;
   estimatedMonthlyCost: number;
+}
+
+export interface BankAccountInfo {
+  bank: string;
+  accountType: string;
+  accountNumber: string;
+  cci: string;
+  currency: string;
+}
+
+export interface CompanyInfo {
+  ruc: string;
+  businessName: string;
+  tradeName: string;
+  fiscalAddress: string;
+  operationalBase: string;
+  legalRepresentative: string;
+  representativeDni: string;
+  phoneCentral: string;
+  emergencyWhatsapp: string;
+  billingEmail: string;
+  digesaAuthorization: string;
+  eorsMinamRegistry: string;
+  bankAccounts: BankAccountInfo[];
+}
+
+export type UserRole =
+  | 'SUPER_ADMIN'
+  | 'JEFE_OPERACIONES'
+  | 'RECEPCION_HOTEL'
+  | 'FACTURACION_CONTABILIDAD';
+
+export interface SystemUser {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  roleLabel: string;
+  status: 'ACTIVO' | 'INACTIVO';
+  phone: string;
+  lastLogin: string;
+  avatarUrl?: string;
 }
